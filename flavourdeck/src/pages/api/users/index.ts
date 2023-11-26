@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { authUser } from './db';
+import { authUser, newUser } from './db';
 
 type Data = {
   name: string
@@ -18,7 +18,8 @@ export default function handler(
           authUser(request.email, request.password)
 
         } else if (request.type === 'register') {
-
+          newUser(request.email, request.password)
+          res.status(200).json({email: request.email, UID: request.uid})
         } else {
             res.status(400).json({ error: 'Invalid request type' })
         }
