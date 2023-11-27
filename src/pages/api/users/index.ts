@@ -3,7 +3,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { authUser, newUser } from './db';
 
 type Data = {
-  name: string
+  body: string
+  email? : any
+  UID? : any
+  error? :boolean
 }
 
 export default function handler(
@@ -19,12 +22,12 @@ export default function handler(
 
         } else if (request.type === 'register') {
           newUser(request.email, request.password)
-          res.status(200).json({email: request.email, UID: request.uid})
+          res.status(200).json({body: "Sucsess", email: request.email, UID: request.uid})
         } else {
-            res.status(400).json({ error: 'Invalid request type' })
+            res.status(400).json({ body: 'Invalid request type' })
         }
     } else {
         // Handle any other HTTP method
-        res.status(200).json({ Error: 'Invalid request. Please use POST' })
+        res.status(200).json({ body: 'Invalid request. Please use POST', error: true })
     }
 }
