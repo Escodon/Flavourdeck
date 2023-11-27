@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const fireFile = require("./firebase.json");
 const firebaseConfig = {
@@ -12,3 +13,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+
+initializeApp();
+
+export const db = getFirestore();
