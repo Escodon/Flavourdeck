@@ -1,28 +1,31 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "msedge",
             "request": "launch",
-            "name": "Next: Edge",
+            "name": "MSEdge",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/flavourdeck"
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Next: Node",
+            "name": "Next Dev (manual)",
             "runtimeExecutable": "npm",
             "runtimeArgs": ["run", "dev"],
-            //"port": 9229,
+            "env": {
+                "ENV": "DEV",
+            },
             "console": "integratedTerminal",
             "skipFiles": ["<node_internals>/**"]
         }
     ],
     "compounds": [
         {
-            "name": "Next: Full",
-            "configurations": ["Next: Node", "Next: Edge"]
+            "name": "Dev - Win11",
+            "configurations": ["Next Dev (manual)", "MSEdge"]
         }
     ]
 }
