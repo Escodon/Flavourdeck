@@ -51,9 +51,9 @@ export type Recipe = {
  * @param recipe The recipe to add to the database. See {@link Recipe} for more information.
  * @returns True if successful, Error if not.
  */
-export async function newRecipe(recipe: Recipe) {
+export async function newRecipe(recipe: Recipe, UserID: string, privateRecipe: boolean) {
   log(`Adding recipe with ID ${recipe.ID}`, "newRecipe");
-  let docRef = collection(db, "recipes");
+  let docRef = collection(db, UserID, "recipes");
   let res = await addDoc(docRef, recipe);
   if (res == null) {
     throw new Error("Failed to add recipe"); 
@@ -75,4 +75,21 @@ export async function getRecipe(ID: string) {
   const recipe = recipes.find((recipe) => recipe.ID === ID);
   log(`Got recipe with ID ${ID}`, "getRecipe");
   return recipe;
+}
+
+
+/**
+ * 
+ * @returns An array of all the recipe IDs and names in the database.
+ */
+export async function getRecipeIndex() {
+  log(`Getting recipe index`, "getRecipeIndex");
+  let querySnapshot = await getDocs(collection(db, "recipes"));
+  let recipes = querySnapshot.docs.map((doc) => doc.data() as Recipe);
+  let recipeIndex: string[] = [];
+  recipes.forEach(recipe => {
+    recipeIndex.push(recipe.ID);
+  });
+  return recipeIndex;
+
 }
