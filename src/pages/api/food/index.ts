@@ -16,6 +16,7 @@ export default async function handler(
   let headers = req.headers;
   if (headers.key == undefined) {return res.status(400).json({body: "No auth key provided", error: true})}
   let auth = await checkAuthKey(headers.key[0])
+  if (!auth) {return res.status(401).json({body: "Invalid auth key", error: true})}
   //check for POST request
     if (req.method === 'POST') {
         // Process a POST request
