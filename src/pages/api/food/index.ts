@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import checkAuthKey from '../auth';
 import { searchRecipes } from './search';
 
 type Data = {
@@ -7,13 +8,14 @@ type Data = {
   
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   let request = req.body;
   let headers = req.headers;
-  
+  if (headers.key == undefined) {return res.status(400).json({body: "No auth key provided", error: true})}
+  let auth = await checkAuthKey(headers.key[0])
   //check for POST request
     if (req.method === 'POST') {
         // Process a POST request
