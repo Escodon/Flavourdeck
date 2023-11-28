@@ -1,6 +1,8 @@
+import { doc, updateDoc } from "firebase/firestore";
 import * as JSsearch from "js-search";
+import { db } from "../firebase";
 import log from "../log";
-import { getRecipeIndex } from "./db";
+import { Recipe, getRecipeIndex } from "./db";
 
 
 /**
@@ -20,5 +22,22 @@ export async function searchRecipes(search: string) {
     request.addDocuments(index);
     var results = request.search(search);
     return results;   
-
 }
+
+/**
+ * @description Adds a new recipe to the database.
+ * @param recipe The recipe to add to the database. See {@link Recipe}.
+ * @param privateRecipe Whether or not the recipe is private.
+ * @example await updateIndex(recipe);
+*/
+export async function updateIndex(recipe: Recipe, privateRecipe: boolean) {
+    if (privateRecipe) return;
+    log(`Indexing recipe with ID ${recipe.ID}`, "index");
+    const indexDoc = doc(db, 'recipes', 'index');
+    let index = await getRecipeIndex();
+    let toPush = recipe.ID + ": " + recipe.name;
+    index.push(toPush);
+    await updateDoc(indexDoc, {index: index});
+    log(`Indexed recipe with ID ${recipe.ID}`, "index");
+    return;
+};
