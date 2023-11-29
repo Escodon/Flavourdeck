@@ -28,7 +28,8 @@ export async function searchRecipes(search: string) {
  * @description Adds a new recipe to the database.
  * @param recipe The recipe to add to the database. See {@link Recipe}.
  * @param privateRecipe Whether or not the recipe is private.
- * @example await updateIndex(recipe);
+ * @returns Nothing.
+ * @example await updateIndex(recipe, privateRecipe);
 */
 export async function updateIndex(recipe: Recipe, privateRecipe: boolean) {
     if (privateRecipe) return;

@@ -54,7 +54,7 @@ export type Recipe = {
  */
 export async function newRecipe(recipe: Recipe, UserID: string, privateRecipe: boolean) {
   log(`Adding recipe with ID ${recipe.ID}`, "newRecipe");
-  let docRef = collection(db, UserID, "recipes");
+  let docRef = collection(db, "Users", UserID, "recipes");
   let res = await addDoc(docRef, recipe);
   await updateIndex(recipe, privateRecipe);
   if (res == null) {

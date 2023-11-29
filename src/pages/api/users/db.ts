@@ -1,5 +1,10 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import { app, db } from "../firebase";
 import log from "../log";
 
 const auth = getAuth(app);
@@ -11,7 +16,7 @@ const auth = getAuth(app);
  * @returns The user object if successful, Error if not.
  */
 export function authUser(email: string, password: string) {
-  log(`Authenticating user with email ${email}`, 'authUser')
+  log(`Authenticating user with email ${email}`, "authUser");
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
@@ -26,18 +31,22 @@ export function authUser(email: string, password: string) {
 }
 
 /**
- * The function to create a new user.
+ * The function to create a new user & add them to the db.
  * @param email The inputted email
  * @param password The inputted password
  * @returns The user object if successful, Error if not.
  */
-export function newUser(email: string, password: string) {
-  log(`Creating user with email ${email}`, 'newUser')
+export async function newUser(email: string, password: string) {
+  log(`Creating user with email ${email}`, "newUser");
   createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       // Signed up
-      const user = userCredential.user;
-      log("Complete.", 'newUser')
+      let user = userCredential.user;
+      let email = user.email;
+      let displayName = user.displayName;
+      let uid = user.uid;
+      let UsersCollection = collection(db, "users");
+      await addDoc(UsersCollection, { uid, email, displayName });
       return user;
     })
     .catch((error) => {
