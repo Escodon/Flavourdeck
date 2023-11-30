@@ -2,12 +2,14 @@
 
 :root {
   font-family: 'Familjen Grotesk';
-  --sans-serif: 'Familjen Grotesk';
-  --headings: 'Pathway Extreme'
+  --sansSerif: 'Familjen Grotesk';
+  --headings: 'Pathway Extreme';
+  --smallBorderRadius: 11px
 }
 
 main {
-  padding-top: 50px;
+  padding-top: 60px;
+  padding-left: 8px;
 }
 
 .topBar {
@@ -19,14 +21,14 @@ main {
   min-height: 44px;
   height: fit-content;
   padding-top: 11px;
-  padding-bottom: 11.5px;
+  padding-bottom: 11px;
   padding-left: 20px;
   padding-right: 20px;
-  font-family: var(--sans-serif);
+  font-family: var(--sansSerif);
   transition: background 0.3s;
   box-sizing: border-box;
   z-index: 4000;
-  border-bottom: 1px solid gainsboro;
+  /* border-bottom: 1px solid gainsboro; */
 }
 
 .topBar img {
@@ -38,4 +40,65 @@ main {
 
 h1 {
   font-family: var(--headings);
+}
+
+button {
+  border-radius: var(--smallBorderRadius);
+  outline: none;
+  border: none;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 7px;
+  padding-bottom: 9px;
+  font-size: 14.5px;
+  font-family: var(--sansSerif);
+  cursor: pointer;
+  box-shadow: 5px 5px 15px rgb(186, 186, 186), -5px -5px 15px #ffffff;
+  margin-right: 14px;
+}
+
+/* button: */
+
+/* .primary {
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%);
+  border: 0.4px solid rgb(186, 186, 186);
+  border-radius: 15px;
+  padding: 12px 24px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 5px 5px 15px rgb(186, 186, 186), -5px -5px 15px #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s, width 2s;
+  font-family: var(--font-dm-mono);
+}
+
+.primary:active {
+  transform: scale(0.9);
+  box-shadow: 4px 4px 20px rgb(186, 186, 186), -7px -7px 20px #ffffff;
+} */
+
+.primary {
+  /* background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%); */
+  background: rgb(244, 157, 110);
+  /* border: 0.4px solid rgb(186, 186, 186); */
+  border-radius: var(--smallBorderRadius);
+  padding-top: 8.5px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 5px 5px 14px rgb(215, 215, 215);
+  transition: transform 0.2s, box-shadow 0.2s, width 2s;
+  font-family: var(--font-dm-mono);
+  color: white
+}
+
+.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 4px 4px 14px rgb(215, 215, 215);
+}
+
+.primary:active {
+  transform: scale(0.9);
+  box-shadow: 4px 4px 14px rgb(215, 215, 215);
 }
