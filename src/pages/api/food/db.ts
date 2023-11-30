@@ -3,6 +3,28 @@ import { db } from "../firebase";
 import log from "../log";
 import { updateIndex } from "./search";
 
+/* 
+* @description The default way of storing ingredents
+*/
+export interface ingredient {
+  unit: string
+  quantity: number
+  ID: number
+  inDir: bool
+  
+};
+
+/*
+* @description The default interface for instructions
+*/
+interface instruction {
+  step: number
+  instruction: Array<string | ingredient>
+  time: number //e.g for cooking & ect
+};
+
+
+
 /**
  * The default recipe object.
  * @example
@@ -14,7 +36,7 @@ import { updateIndex } from "./search";
  *  tags: ["Italian", "Pasta"]
  * }
  */
-export type Recipe = {
+export default interface Recipe {
   /**
    * The ID of the recipe.
    * Uses Date.Now() to generate a unique ID.
@@ -31,13 +53,13 @@ export type Recipe = {
    * Stored as an array
    * @example ["Tomatoes", "Garlic", "Olive Oil"]
    */
-  ingredients: string[];
+  ingredients: Array<ingredient>;
   /**
    * The instructions of the recipe.
    * Stored as an array
    * @example ["Chop tomatoes", "Cook tomatoes", "Add garlic", "Add olive oil"]
    */
-  instructions: string[];
+  instructions: Array<instruction>;
   /**
    * The tags of the recipe.
    * Stored as an array
