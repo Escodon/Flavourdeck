@@ -1,0 +1,13 @@
+Users:
+      USERID
+            - DisplayName: String
+            - Email: String
+            - Recipes: Sub-Doc
+                  - RECIPEID
+                        - DisplayName: String
+                        - Ingredients: StringArray
+                        - Instructions: StringArray
+                        - Tags: StringArray 
+Index:
+      PublicRecipes:
+                  - INDEX: StringArray (JSON)

@@ -12,8 +12,16 @@ const firebaseConfig = {
     measurementId: fireFile.measurementId
 };
 
+/**
+ * The firebase app object. 
+ * Use this to avoid loading it multiple times.
+ */
 export const app = initializeApp(firebaseConfig);
 
 initializeApp();
 
+/**
+ * The database object. 
+ * Use this to avoid loading it multiple times.
+ */
 export const db = getFirestore();

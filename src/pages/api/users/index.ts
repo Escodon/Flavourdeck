@@ -9,7 +9,7 @@ type Data = {
   error? :boolean
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
