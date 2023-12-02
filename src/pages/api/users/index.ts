@@ -31,3 +31,5 @@ export default async function handler(
         res.status(200).json({ body: 'Invalid request. Please use POST', error: true })
     }
 }
+
+export var signIn = false;

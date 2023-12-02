@@ -15,3 +15,4 @@ export async function setIcon(UserID: string, icon: string) {
     let res = await uploadString(iconRef, icon, 'data_url');
     return res;
 }
+
