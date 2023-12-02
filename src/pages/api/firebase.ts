@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-const fireFile = require("./firebase.json");
+const fireFile = require("../../../firebase.json");
 const firebaseConfig = {
     apiKey: fireFile.apiKey,
     authDomain: fireFile.authDomain,
@@ -18,7 +18,6 @@ const firebaseConfig = {
  */
 export const app = initializeApp(firebaseConfig);
 
-initializeApp();
 
 /**
  * The database object. 

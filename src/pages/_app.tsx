@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import { getFirestore } from 'firebase/firestore'
 import type { AppProps } from 'next/app'
 import Image from 'next/image'
+import { app } from './api/firebase'
 
 
 const db = getFirestore(app)
