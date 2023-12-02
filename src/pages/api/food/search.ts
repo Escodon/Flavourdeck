@@ -2,7 +2,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import * as JSsearch from "js-search";
 import { db } from "../firebase";
 import log from "../log";
-import { Recipe, getRecipeIndex } from "./db";
+import Recipe, { getRecipeIndex } from "./db";
 
 
 /**

@@ -10,7 +10,7 @@ export interface ingredient {
   unit: string
   quantity: number
   ID: number
-  inDir: bool
+  inDir: boolean
   
 };
 
