@@ -3,25 +3,22 @@ import type { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import log from "./api/log";
-import { signIn } from "./api/users";
 import { authUser } from "./api/users/db";
 
 
-if (signIn) {
-	var buttonsMsg = "Log out";
-} else {
-	var buttonsMsg = "Log in";
-}
+
 
 
 log("Login page called", "login");
 
 export default function Login({ Component, pageProps }: AppProps) {
+	const [buttonsMsg, setButtonsMsg] = useState("Log in"); 
+	const [res, setRes] = useState(''); // define res as a state variable
 	const router = useRouter();
 	log("Rendering login page", "login");
-	function handleSubmit(e: FormEvent<HTMLFormElement>) {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		log("Handling login", "login/handleSubmit");
 		console.log("Test")
 		e.preventDefault();
@@ -35,12 +32,21 @@ export default function Login({ Component, pageProps }: AppProps) {
 		if (email == "t") {console.log("Test email used!"); router.push('/'); 	return true}
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
-			 authUser(email, password);
-			log("Logged in!", "login/handleSubmit");
-			var butonsMsg = "Log out";
-			return true;
+			const response = await authUser(email, password); // wait for the Promise to resolve
+			if (typeof response === 'object' && response instanceof Error) {
+				console.error(response);
+				setRes("Uh-Oh! Something went wrong! Please try again"); // update res
+				return false;
+			} else if (response) { //type: ignore
+				log("Logged in!", "login/handleSubmit");
+				setButtonsMsg("Logged in!"); 
+				return true;
+			} else {
+				setRes("Invalid email or password"); // update res
+			}
 		} catch (error) {
 			console.error(error);
+			setRes("Uh-Oh! Something went wrong! Please try again"); // update res
 			return false;
 		}
 	}
@@ -75,6 +81,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 					<button className="primary" type="submit">
 						Log in
 					</button>
+					<p>{res}</p>
 				</form>
 			</div>
 
