@@ -13,11 +13,11 @@ const auth = getAuth(app);
  * Wrapper for firebases auth function.
  * @param email The inputted email
  * @param password The inputted password
- * @returns {JSON} .
+ * @returns {Promise} .
  */
-export function authUser(email: string, password: string) {
+export function authUser(email: string, password: string): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
@@ -26,7 +26,7 @@ export function authUser(email: string, password: string) {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      return Error(errorCode, errorMessage);
+      return {error: true, code: errorCode, message: errorMessage};
     });
 }
 

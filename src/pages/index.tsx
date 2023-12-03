@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 // import { Inter } from 'next/font/google'
 // import styles from '@/styles/Home.module.css'
 
@@ -15,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>:)</h1>
+        <h1>Welcome to Flavourdeck!</h1>
       </main>
     </>
   )

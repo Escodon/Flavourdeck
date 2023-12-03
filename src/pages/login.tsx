@@ -11,7 +11,7 @@ import { authUser } from "./api/users/db";
 
 
 
-log("Login page called", "login");
+log("Login page called", "login"); //it works but dosent look pretty
 
 export default function Login({ Component, pageProps }: AppProps) {
 	const [buttonsMsg, setButtonsMsg] = useState("Log in"); 
@@ -33,11 +33,14 @@ export default function Login({ Component, pageProps }: AppProps) {
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password); // wait for the Promise to resolve
-			if (typeof response === 'object' && response instanceof Error) {
+			log(response, "login/handleSubmit")
+			console.log(response)
+			setRes(response.error);
+			if (!response.error) { 
 				console.error(response);
-				setRes("Uh-Oh! Something went wrong! Please try again"); // update res
+				//setRes("Uh-Oh! Something went wrong! Please try again"); // update res
 				return false;
-			} else if (response) { //type: ignore
+			} else if (response.error) { 
 				log("Logged in!", "login/handleSubmit");
 				setButtonsMsg("Logged in!"); 
 				return true;
@@ -46,7 +49,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 			}
 		} catch (error) {
 			console.error(error);
-			setRes("Uh-Oh! Something went wrong! Please try again"); // update res
+			//setRes("Uh-Oh! Something went wrong! Please try again"); // update res
 			return false;
 		}
 	}
