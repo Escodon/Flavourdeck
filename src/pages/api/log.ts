@@ -7,7 +7,7 @@
  * @returns Nothing
  */
 export default function log(message: string, funcName: string) {
-    if (process.env.DEV === 'true') {
+    // if (process.env.DEV === 'true') {
   console.log(` ✓ [FD] ${funcName}: ${message}`)
-    } else return
+    // } else return
 }
