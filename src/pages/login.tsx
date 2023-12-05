@@ -1,19 +1,16 @@
-//import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import log from "./api/log";
-import { authUser } from "./api/users/db";
+import { UserContext, authUser } from "./api/users/db";
 
 
-
-
-
-log("Login page called", "login"); //it works but dosent look pretty
+log("Login page called", "login"); 
 
 export default function Login({ Component, pageProps }: AppProps) {
+	const { setUser } = useContext(UserContext);
 	const [buttonsMsg, setButtonsMsg] = useState("Log in"); 
 	const [res, setRes] = useState(''); // define res as a state variable
 	const router = useRouter();
@@ -32,10 +29,14 @@ export default function Login({ Component, pageProps }: AppProps) {
 		if (email == "t") {console.log("Test email used!"); router.push('/'); 	return true}
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
-			const response = await authUser(email, password, router); // wait for the Promise to resolve
+			const response = await authUser(email, password, router);
+			if (response.user) {
+			  setUser(response.user);
+			}			
 			log("DEBUG: " + JSON.stringify(response), "login/handleSubmit")
 			//if (JSON.stringify(response.error) != null) { 
 			//	console.error(response);
+			
 				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
 				router.push("/settings?uid=" + response.uid);
 				return false;

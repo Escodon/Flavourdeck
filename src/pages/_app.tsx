@@ -12,11 +12,11 @@ let currentUser: User | null = null;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    log('User signed in', 'login/onAuthStateChanged');
+    log('User signed in', '_app/onAuthStateChanged');
     signIn = true;
     currentUser = user;
   } else {
-    log('User signed out', 'login/onAuthStateChanged');
+    log('User signed out', '_app/onAuthStateChanged');
     signIn = false;
     currentUser = null;
   }

@@ -4,11 +4,20 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
+import { createContext, useContext } from 'react';
 import { app, db } from "../firebase";
 import log from "../log";
 
-const auth = getAuth(app);
+interface UserContextType {
+  user: any;
+  setUser: (user: any) => void;
+}
 
+// The user context, used to store the user object globally.
+export const UserContext = createContext<UserContextType>({
+  user: null,
+  setUser: () => {} // This is a placeholder, it will be overridden by the actual setUser function
+});const auth = getAuth(app);
 /**
  * Wrapper for firebases auth function.
  * @param email The inputted email
@@ -16,8 +25,9 @@ const auth = getAuth(app);
  * @returns {Promise} .
  */
 export async function authUser(email: string, password: string, router:any): Promise<any> {
+  const {setUser}  = useContext(UserContext);
   log(`Authenticating user with email ${email}`, "authUser");
-   await signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       log(`User with email ${email} authenticated`, "authUser")
@@ -33,6 +43,8 @@ export async function authUser(email: string, password: string, router:any): Pro
       return {error: true, code: errorCode, message: errorMessage};
     });
 }
+
+
 
 /**
  * The function to create a new user & add them to the db.
