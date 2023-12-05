@@ -1,6 +1,17 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import log from './api/log';
+import { UserContext } from './api/users/db';
+
 export default function UserSettings() {
-    
+  const router = useRouter();
+  const { uid } = router.query;
+  const { user } = useContext(UserContext); // Access the user object from the context
+  log("User context: " + JSON.stringify(user), "settings")
+
+  log("Rendering user settings page for user with uid " + uid, "settings")
+
   return (
     <>
       <Head>
@@ -10,7 +21,7 @@ export default function UserSettings() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Settings - </h1>
+        <h1>Settings - {user ? user.email : 'No user logged in'}</h1>
       </main>
     </>
   )

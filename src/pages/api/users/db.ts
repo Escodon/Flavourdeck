@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 import { app, db } from "../firebase";
 import log from "../log";
 
@@ -25,7 +25,6 @@ export const UserContext = createContext<UserContextType>({
  * @returns {Promise} .
  */
 export async function authUser(email: string, password: string, router:any): Promise<any> {
-  const {setUser}  = useContext(UserContext);
   log(`Authenticating user with email ${email}`, "authUser");
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
