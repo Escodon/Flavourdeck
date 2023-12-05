@@ -32,22 +32,26 @@ export default function Login({ Component, pageProps }: AppProps) {
 		if (email == "t") {console.log("Test email used!"); router.push('/'); 	return true}
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
-			const response = await authUser(email, password); // wait for the Promise to resolve
-			log(response, "login/handleSubmit")
-			console.log(response)
-			setRes(response.error);
-			if (!response.error) { 
-				console.error(response);
-				//setRes("Uh-Oh! Something went wrong! Please try again"); // update res
+			const response = await authUser(email, password, router); // wait for the Promise to resolve
+			log("DEBUG: " + JSON.stringify(response), "login/handleSubmit")
+			//if (JSON.stringify(response.error) != null) { 
+			//	console.error(response);
+				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
+				router.push("/settings?uid=" + response.uid);
 				return false;
-			} else if (response.error) { 
-				log("Logged in!", "login/handleSubmit");
-				setButtonsMsg("Logged in!"); 
-				return true;
-			} else {
-				setRes("Invalid email or password"); // update res
-			}
+			// } else if (response.error) { 
+			// 	log("Logged in!", "login/handleSubmit");
+			// 	setButtonsMsg("Logged in!"); 
+			// 	return true;
+			// } else {
+			// 	setRes("Invalid email or password"); // update res
+			// }
 		} catch (error) {
+			if (error != null) {
+				log("Error: " + error, "login/handleSubmit");
+			} else {
+				log("Ghost error detected! Skipping...", "login/handleSubmit")
+			}
 			console.error(error);
 			//setRes("Uh-Oh! Something went wrong! Please try again"); // update res
 			return false;

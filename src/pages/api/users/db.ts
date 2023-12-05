@@ -15,15 +15,19 @@ const auth = getAuth(app);
  * @param password The inputted password
  * @returns {Promise} .
  */
-export function authUser(email: string, password: string): Promise<any> {
+export async function authUser(email: string, password: string, router:any): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
-  return signInWithEmailAndPassword(auth, email, password)
+   await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
+      log(`User with email ${email} authenticated`, "authUser")
       const user = userCredential.user;
+      log("DEBUG: " + JSON.stringify(userCredential), "authUser")
+      router.push("/settings?uid=" + user.uid);
       return {error: false, user};
     })
     .catch((error) => {
+      log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
       const errorCode = error.code;
       const errorMessage = error.message;
       return {error: true, code: errorCode, message: errorMessage};

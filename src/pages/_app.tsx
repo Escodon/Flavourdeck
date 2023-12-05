@@ -1,14 +1,31 @@
 import '@/styles/globals.css'
-import { getFirestore } from 'firebase/firestore'
+import { User, getAuth, onAuthStateChanged } from "firebase/auth"
 import type { AppProps } from 'next/app'
 import Image from 'next/image'
 import Link from 'next/link'
 import { app } from './api/firebase'
-import { signIn } from './api/users'
+import log from './api/log'
+const auth = getAuth(app);
+
+let signIn = false;
+let currentUser: User | null = null;
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    log('User signed in', 'login/onAuthStateChanged');
+    signIn = true;
+    currentUser = user;
+  } else {
+    log('User signed out', 'login/onAuthStateChanged');
+    signIn = false;
+    currentUser = null;
+  }
+});
 
 if (signIn) { var buttonsMsg = 'Log out' } else { var buttonsMsg = 'Log in' }
 
-const db = getFirestore(app)
+export { currentUser, signIn }
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return <span>
