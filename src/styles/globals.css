@@ -97,17 +97,15 @@ button {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, width 2s;
   font-family: var(--font-dm-mono);
-  transition: background 0.5s;
   color: white
 }
 
 .primary:hover {
-  /* transform: scale(1.05); */
+  transform: scale(1.05);
   box-shadow: 4px 4px 14px rgb(215, 215, 215);
-  background: white;
 }
 
 .primary:active {
-  /* transform: scale(0.9); */
+  transform: scale(0.9);
   box-shadow: 4px 4px 14px rgb(215, 215, 215);
 }

@@ -61,26 +61,6 @@ export default function Login({ Component, pageProps }: AppProps) {
 	return (
 		<main>
 			<span>
-				<div className="topBar">
-					<Image
-						alt="yo"
-						style={{ marginTop: "6px", marginBottom: "2px", float: "left" }}
-						width="22"
-						height="22"
-						src={"/assets/logo_simple.svg"}
-					/>
-					<Link href="/login">
-						<button
-							className="primary"
-							style={{ float: "right", marginRight: "0" }}
-						>
-							{buttonsMsg}
-						</button>
-					</Link>
-					<button className="primary" style={{ float: "right" }}>
-						Sign up
-					</button>
-				</div>
 				<div className="form1">
 					<form className="loginForm" onSubmit={handleSubmit}>
 						<h1>Log in</h1>
@@ -94,7 +74,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 						</button>
 						<p>{res}</p>
 					</form>
-				</div>
+				</div>h
 
 				{/* <Component {...pageProps} /> */}
 			</span>
