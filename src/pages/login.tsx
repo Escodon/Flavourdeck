@@ -32,7 +32,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 			const response = await authUser(email, password, router);
 			if (response.user) {
 				log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
-				setUser(response.user);
+				setUser(JSON.stringify(response.user));
 			}			
 			//if (JSON.stringify(response.error) != null) { 
 			//	console.error(response);
