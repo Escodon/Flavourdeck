@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import * as fireFile from "../../../firebase.json"
 
-const fireFile = require("../../../firebase.json");
 const firebaseConfig = {
     apiKey: fireFile.apiKey,
     authDomain: fireFile.authDomain,

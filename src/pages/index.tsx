@@ -1,8 +1,12 @@
 import Head from 'next/head'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faCalendar } from '@fortawesome/free-regular-svg-icons'
 // import { Inter } from 'next/font/google'
 // import styles from '@/styles/Home.module.css'
 
 // const inter = Inter({ subsets: ['latin'] })
+
+
 
 export default function Home() {
   return (

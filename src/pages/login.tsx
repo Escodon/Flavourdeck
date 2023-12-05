@@ -10,11 +10,10 @@ import { authUser } from "./api/users/db";
 
 
 
-
 log("Login page called", "login"); //it works but dosent look pretty
 
 export default function Login({ Component, pageProps }: AppProps) {
-	const [buttonsMsg, setButtonsMsg] = useState("Log in"); 
+	const [buttonsMsg, setButtonsMsg] = useState("Log in");
 	const [res, setRes] = useState(''); // define res as a state variable
 	const router = useRouter();
 	log("Rendering login page", "login");
@@ -25,24 +24,24 @@ export default function Login({ Component, pageProps }: AppProps) {
 		const target = e.target as typeof e.target & {
 			email: { value: string };
 			password: { value: string };
-		  };
-		  console.log(target)
-		  const email = target.email.value; 
-		  const password = target.password.value; 
-		if (email == "t") {console.log("Test email used!"); router.push('/'); 	return true}
+		};
+		console.log(target)
+		const email = target.email.value;
+		const password = target.password.value;
+		if (email == "t") { console.log("Test email used!"); router.push('/'); return true }
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password); // wait for the Promise to resolve
 			log(response, "login/handleSubmit")
 			console.log(response)
 			setRes(response.error);
-			if (!response.error) { 
+			if (!response.error) {
 				console.error(response);
 				//setRes("Uh-Oh! Something went wrong! Please try again"); // update res
 				return false;
-			} else if (response.error) { 
+			} else if (response.error) {
 				log("Logged in!", "login/handleSubmit");
-				setButtonsMsg("Logged in!"); 
+				setButtonsMsg("Logged in!");
 				return true;
 			} else {
 				setRes("Invalid email or password"); // update res
@@ -54,41 +53,45 @@ export default function Login({ Component, pageProps }: AppProps) {
 		}
 	}
 	return (
-		<span>
-			<div className="topBar">
-				<Image
-					alt="yo"
-					style={{ marginTop: "6px", marginBottom: "2px", float: "left" }}
-					width="22"
-					height="22"
-					src={"/assets/logo_simple.svg"}
-				/>
-				<Link href="/login">
-					<button
-						className="primary"
-						style={{ float: "right", marginRight: "0" }}
-					>
-						{buttonsMsg}
+		<main>
+			<span>
+				<div className="topBar">
+					<Image
+						alt="yo"
+						style={{ marginTop: "6px", marginBottom: "2px", float: "left" }}
+						width="22"
+						height="22"
+						src={"/assets/logo_simple.svg"}
+					/>
+					<Link href="/login">
+						<button
+							className="primary"
+							style={{ float: "right", marginRight: "0" }}
+						>
+							{buttonsMsg}
+						</button>
+					</Link>
+					<button className="primary" style={{ float: "right" }}>
+						Sign up
 					</button>
-				</Link>
-				<button className="primary" style={{ float: "right" }}>
-					Sign up
-				</button>
-			</div>
-			<div className="form1">
-				<form className="loginForm" onSubmit={handleSubmit}>
-					<h1>Log in</h1>
-					<input name="email" type="text" placeholder="Email" />
-					
-					<input name="password" type="password" placeholder="Password" />
-					<button className="primary" type="submit">
-						Log in
-					</button>
-					<p>{res}</p>
-				</form>
-			</div>
+				</div>
+				<div className="form1">
+					<form className="loginForm" onSubmit={handleSubmit}>
+						<h1>Log in</h1>
+						<input name="email" type="text" placeholder="Email" />
+						<br />
 
-			{/* <Component {...pageProps} /> */}
-		</span>
+						<input name="password" type="password" placeholder="Password" />
+						<br />
+						<button className="primary" type="submit">
+							Log in
+						</button>
+						<p>{res}</p>
+					</form>
+				</div>
+
+				{/* <Component {...pageProps} /> */}
+			</span>
+		</main>
 	);
 }
