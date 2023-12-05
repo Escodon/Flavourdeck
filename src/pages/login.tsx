@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import log from "./api/log";
 import { UserContext, authUser } from "./api/users/db";
 
@@ -22,11 +22,11 @@ export default function Login({ Component, pageProps }: AppProps) {
 		const target = e.target as typeof e.target & {
 			email: { value: string };
 			password: { value: string };
-		  };
-		  console.log(target)
-		  const email = target.email.value; 
-		  const password = target.password.value; 
-		if (email == "t") {console.log("Test email used!"); router.push('/'); 	return true}
+		};
+		console.log(target)
+		const email = target.email.value;
+		const password = target.password.value;
+		if (email == "t") { console.log("Test email used!"); router.push('/'); return true }
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password, router);
@@ -59,41 +59,45 @@ export default function Login({ Component, pageProps }: AppProps) {
 		}
 	}
 	return (
-		<span>
-			<div className="topBar">
-				<Image
-					alt="yo"
-					style={{ marginTop: "6px", marginBottom: "2px", float: "left" }}
-					width="22"
-					height="22"
-					src={"/assets/logo_simple.svg"}
-				/>
-				<Link href="/login">
-					<button
-						className="primary"
-						style={{ float: "right", marginRight: "0" }}
-					>
-						{buttonsMsg}
+		<main>
+			<span>
+				<div className="topBar">
+					<Image
+						alt="yo"
+						style={{ marginTop: "6px", marginBottom: "2px", float: "left" }}
+						width="22"
+						height="22"
+						src={"/assets/logo_simple.svg"}
+					/>
+					<Link href="/login">
+						<button
+							className="primary"
+							style={{ float: "right", marginRight: "0" }}
+						>
+							{buttonsMsg}
+						</button>
+					</Link>
+					<button className="primary" style={{ float: "right" }}>
+						Sign up
 					</button>
-				</Link>
-				<button className="primary" style={{ float: "right" }}>
-					Sign up
-				</button>
-			</div>
-			<div className="form1">
-				<form className="loginForm" onSubmit={handleSubmit}>
-					<h1>Log in</h1>
-					<input name="email" type="text" placeholder="Email" />
-					
-					<input name="password" type="password" placeholder="Password" />
-					<button className="primary" type="submit">
-						Log in
-					</button>
-					<p>{res}</p>
-				</form>
-			</div>
+				</div>
+				<div className="form1">
+					<form className="loginForm" onSubmit={handleSubmit}>
+						<h1>Log in</h1>
+						<input name="email" type="text" placeholder="Email" />
+						<br />
 
-			{/* <Component {...pageProps} /> */}
-		</span>
+						<input name="password" type="password" placeholder="Password" />
+						<br />
+						<button className="primary" type="submit">
+							Log in
+						</button>
+						<p>{res}</p>
+					</form>
+				</div>
+
+				{/* <Component {...pageProps} /> */}
+			</span>
+		</main>
 	);
 }
