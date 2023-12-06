@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import log from './api/log';
+import { syncUserSettings } from './api/users/db';
 
 export default function UserSettings() {
   const router = useRouter();
@@ -10,6 +11,12 @@ export default function UserSettings() {
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
 
+  type user = {
+    uid: string,
+    displayName: string,
+    email: string, 
+  }
+  
 
   useEffect(() => {
     // This code will only run on the client-side
@@ -26,14 +33,23 @@ export default function UserSettings() {
    * @returns {void}
    */
   function updateSettings() {
-    log("Updating user settings", "settings/updateSettings")
-    if (name == null) { let name = user.displayName}
-    if (email == null) { let email = user.email}
+    if (user == null) {console.error("User is null! Cannot update settings!"); return}
+    log("Updating user settings (local store)", "settings/updateSettings")
+    let name = user.displayName ?? 'Unknown'; // If user.displayName is null, 'defaultName' will be used
+    let email = user.email ?? 'error@escodon.com'; // If user.email is null, 'defaultEmail' will be used
     let newSettings = {
       name: name,
       email: email,
     }
-    localStorage.setItem('user', JSON.stringify(newSettings));
+    localStorage.setItem('userSettings', JSON.stringify(newSettings));
+    log("Complete! Updating user settings (database)", "settings/updateSettings")
+    let settingsToDB = {
+      uid: user.uid ?? "123456",
+      displayName: name,
+      email: email,
+      darkMode: false, // Add this line, set it to the desired value
+    }
+    syncUserSettings(settingsToDB); // Pass the settingsToDB object to the syncUserSettings function
   }
 
   log("Rendering user settings page for user with uid " + uid, "settings")
