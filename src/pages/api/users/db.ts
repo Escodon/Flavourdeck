@@ -75,6 +75,9 @@ export async function newUser(email: string, password: string) {
 /**
  * This function is used to store a variable in a closure.
  * Used to sync local user data across page loads.
+ * @example const storeUser = storeUserInfo(); (This is called once per page load)
+ * @example storeUser(user); (This is called whenever the user object is updated)
+ * @example const user = storeUser(); (This is called whenever the user object is needed)
  * @returns {Function} A function that stores a variable in a closure.
  */
 export function storeUserInfo() {
