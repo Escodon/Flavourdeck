@@ -7,6 +7,9 @@ export default function UserSettings() {
   const router = useRouter();
   const { uid } = router.query;
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+
 
   useEffect(() => {
     // This code will only run on the client-side
@@ -17,7 +20,21 @@ export default function UserSettings() {
       router.push('/login');
     }
   }, []);
-  log("User context: " + JSON.stringify(user), "settings")
+  
+  /**
+   * Updates the user settings
+   * @returns {void}
+   */
+  function updateSettings() {
+    log("Updating user settings", "settings/updateSettings")
+    if (name == null) { let name = user.displayName}
+    if (email == null) { let email = user.email}
+    let newSettings = {
+      name: name,
+      email: email,
+    }
+    localStorage.setItem('user', JSON.stringify(newSettings));
+  }
 
   log("Rendering user settings page for user with uid " + uid, "settings")
 
@@ -32,8 +49,17 @@ export default function UserSettings() {
       <main>
         <h1>Settings - {user ? user.email : 'No user logged in'}</h1>
         <p>UID: {uid}</p>
-        <p></p>
-
+        <h2>User profile:</h2>
+        <p>Name: {user ? user.displayName : "Unknown"}</p>
+        <input type="text" placeholder="Change your name" />
+        <br />
+        <p>Email: {user ? user.email : "unknown email"}</p>
+        <input type="text" placeholder="Change your email" />
+        <br />
+        <p>Profile picture:</p>
+        <input type="file"/>
+        <br />
+        <button className="primary" onClick={updateSettings}>Save</button>
       </main>
     </>
   )
