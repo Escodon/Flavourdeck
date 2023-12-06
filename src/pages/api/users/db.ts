@@ -1,23 +1,12 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
-import { createContext } from 'react';
-import { app, db } from "../firebase";
+import { auth, db } from "../firebase";
 import log from "../log";
 
-interface UserContextType {
-  user: any;
-  setUser: (user: any) => void;
-}
 
-// The user context, used to store the user object globally.
-export const UserContext = createContext<UserContextType>({
-  user: null,
-  setUser: () => {} // This is a placeholder, it will be overridden by the actual setUser function
-});const auth = getAuth(app);
 /**
  * Wrapper for firebases auth function.
  * @param email The inputted email
@@ -83,7 +72,7 @@ export async function newUser(email: string, password: string) {
 export function storeUserInfo() {
   let storedVar:any = null; // This variable is stored in the closure
 
-  return function(value: any) {
+  return function(value: JSON | null) {
     if (value !== undefined) {
       storedVar = value; // If a value is provided, store it
     }
