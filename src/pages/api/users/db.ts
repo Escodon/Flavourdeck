@@ -70,3 +70,21 @@ export async function newUser(email: string, password: string) {
       return { errorCode, errorMessage };
     });
 }
+
+
+/**
+ * This function is used to store a variable in a closure.
+ * Used to sync local user data across page loads.
+ * @returns {Function} A function that stores a variable in a closure.
+ */
+export function storeUserInfo() {
+  let storedVar:any = null; // This variable is stored in the closure
+
+  return function(value: any) {
+    if (value !== undefined) {
+      storedVar = value; // If a value is provided, store it
+    }
+    return storedVar; // Return the stored value
+  };
+}
+

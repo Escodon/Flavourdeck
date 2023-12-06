@@ -26,7 +26,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 		console.log(target)
 		const email = target.email.value;
 		const password = target.password.value;
-		if (email == "t") { console.log("Test email used!"); router.push('/'); return true }
+		if (email == "t") { console.log("Test email used!"); router.push('/settings?uid=test'); return true }
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password, router);
@@ -34,19 +34,9 @@ export default function Login({ Component, pageProps }: AppProps) {
 				log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
 				setUser(JSON.stringify(response.user));
 			}			
-			//if (JSON.stringify(response.error) != null) { 
-			//	console.error(response);
-			
 				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
 				router.push("/settings?uid=" + response.uid);
 				return false;
-			// } else if (response.error) { 
-			// 	log("Logged in!", "login/handleSubmit");
-			// 	setButtonsMsg("Logged in!"); 
-			// 	return true;
-			// } else {
-			// 	setRes("Invalid email or password"); // update res
-			// }
 		} catch (error) {
 			if (error != null) {
 				log("Error: " + error, "login/handleSubmit");
