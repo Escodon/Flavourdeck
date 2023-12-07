@@ -1,23 +1,18 @@
 import type { AppProps } from "next/app";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import log from "./api/log";
-import { UserContext, authUser } from "./api/users/db";
+import { authUser } from "./api/users/db";
 
 
 log("Login page called", "login"); 
 
 export default function Login({ Component, pageProps }: AppProps) {
-	const {setUser}  = useContext(UserContext);
-	const [buttonsMsg, setButtonsMsg] = useState("Log in"); 
-	const [res, setRes] = useState(''); // define res as a state variable
+	const [res, setRes] = useState(''); 
 	const router = useRouter();
 	log("Rendering login page", "login");
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		log("Handling login", "login/handleSubmit");
-		console.log("Test")
 		e.preventDefault();
 		const target = e.target as typeof e.target & {
 			email: { value: string };
@@ -32,7 +27,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 			const response = await authUser(email, password, router);
 			if (response.user) {
 				log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
-				setUser(JSON.stringify(response.user));
+				localStorage.setItem("user", JSON.stringify(response.user));
 			}			
 				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
 				router.push("/settings?uid=" + response.uid);
@@ -64,7 +59,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 						</button>
 						<p>{res}</p>
 					</form>
-				</div>h
+				</div>
 
 				{/* <Component {...pageProps} /> */}
 			</span>

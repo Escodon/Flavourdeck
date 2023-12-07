@@ -1,14 +1,56 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import log from './api/log';
-import { UserContext } from './api/users/db';
+import { syncUserSettings } from './api/users/db';
 
 export default function UserSettings() {
   const router = useRouter();
   const { uid } = router.query;
-  const { user } = useContext(UserContext); // Access the user object from the context
-  log("User context: " + JSON.stringify(user), "settings")
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+
+  type user = {
+    uid: string,
+    displayName: string,
+    email: string, 
+  }
+  
+
+  useEffect(() => {
+    // This code will only run on the client-side
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      router.push('/login');
+    }
+  }, []);
+  
+  /**
+   * Updates the user settings
+   * @returns {void}
+   */
+  function updateSettings() {
+    if (user == null) {console.error("User is null! Cannot update settings!"); return}
+    log("Updating user settings (local store)", "settings/updateSettings")
+    let name = user.displayName ?? 'Unknown'; // If user.displayName is null, 'defaultName' will be used
+    let email = user.email ?? 'error@escodon.com'; // If user.email is null, 'defaultEmail' will be used
+    let newSettings = {
+      name: name,
+      email: email,
+    }
+    localStorage.setItem('userSettings', JSON.stringify(newSettings));
+    log("Complete! Updating user settings (database)", "settings/updateSettings")
+    let settingsToDB = {
+      uid: user.uid ?? "123456",
+      displayName: name,
+      email: email,
+      darkMode: false, // Add this line, set it to the desired value
+    }
+    syncUserSettings(settingsToDB); // Pass the settingsToDB object to the syncUserSettings function
+  }
 
   log("Rendering user settings page for user with uid " + uid, "settings")
 
@@ -21,10 +63,19 @@ export default function UserSettings() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Privacy Policy</h1>
-        Your privacy and the protection of your data is very important to us. This Privacy
-        Policy sets how we approach the management of such. Flavourdeck Premium users are
-        not affected by this change.
+        <h1>Settings - {user ? user.email : 'No user logged in'}</h1>
+        <p>UID: {uid}</p>
+        <h2>User profile:</h2>
+        <p>Name: {user ? user.displayName : "Unknown"}</p>
+        <input type="text" placeholder="Change your name" />
+        <br />
+        <p>Email: {user ? user.email : "unknown email"}</p>
+        <input type="text" placeholder="Change your email" />
+        <br />
+        <p>Profile picture:</p>
+        <input type="file"/>
+        <br />
+        <button className="primary" onClick={updateSettings}>Save</button>
       </main>
     </>
   )

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import * as fireFile from "../../../firebase.json"
+import fireFile from "../../../firebase.json";
 
 const firebaseConfig = {
     apiKey: fireFile.apiKey,
@@ -24,3 +25,9 @@ export const app = initializeApp(firebaseConfig);
  * Use this to avoid loading it multiple times.
  */
 export const db = getFirestore();
+
+/**
+ * The auth object.
+ * Use this to avoid loading it multiple times.
+ */
+export const auth = getAuth(app);

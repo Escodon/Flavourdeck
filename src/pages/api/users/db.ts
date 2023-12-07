@@ -1,23 +1,12 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
-import { createContext } from 'react';
-import { app, db } from "../firebase";
+import { auth, db } from "../firebase";
 import log from "../log";
 
-interface UserContextType {
-  user: any;
-  setUser: (user: any) => void;
-}
 
-// The user context, used to store the user object globally.
-export const UserContext = createContext<UserContextType>({
-  user: null,
-  setUser: () => {} // This is a placeholder, it will be overridden by the actual setUser function
-});const auth = getAuth(app);
 /**
  * Wrapper for firebases auth function.
  * @param email The inputted email
@@ -71,23 +60,17 @@ export async function newUser(email: string, password: string) {
     });
 }
 
+export interface UserSettings {
+  uid: string,
+  email: string,
+  displayName: string,
+  darkMode: boolean
+}
 
-/**
- * This function is used to store a variable in a closure.
- * Used to sync local user data across page loads.
- * @example const storeUser = storeUserInfo(); (This is called once per page load)
- * @example storeUser(user); (This is called whenever the user object is updated)
- * @example const user = storeUser(); (This is called whenever the user object is needed)
- * @returns {Function} A function that stores a variable in a closure.
- */
-export function storeUserInfo() {
-  let storedVar:any = null; // This variable is stored in the closure
-
-  return function(value: any) {
-    if (value !== undefined) {
-      storedVar = value; // If a value is provided, store it
-    }
-    return storedVar; // Return the stored value
-  };
+export async function syncUserSettings(settings:UserSettings) {
+  log(`Syncing user settings for ${settings.email}`, "syncUserSettings");
+  let UsersCollection = collection(db, "users");
+  await addDoc(UsersCollection, settings);
+  return settings;
 }
 
