@@ -5,14 +5,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { app } from './api/firebase'
-import { listenForUser } from './api/users/functions'
 
 
 const db = getFirestore(app)
 
-listenForUser((user) => {
-  alert('hi!' + user?.uid)
-})
+//listenForUser((user) => {
+  //alert('hi!' + user?.uid)
+//})
 
 export default function App({ Component, pageProps }: AppProps) {
   const [topBarClass, setTopBarClass] = useState('topBar')

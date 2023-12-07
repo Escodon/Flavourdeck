@@ -5,7 +5,7 @@ import {
   setPersistence,
   signInWithEmailAndPassword
 } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import log from "../log";
 
@@ -71,6 +71,9 @@ export async function newUser(email: string, password: string, router:any) {
     });
 }
 
+/**
+ * User setting interface
+ */
 export interface UserSettings {
   uid: string,
   email: string,
@@ -78,6 +81,23 @@ export interface UserSettings {
   darkMode: boolean
 }
 
+/**
+ * Gets the settings of the user.
+ * @param UID The User ID to get the settings for
+ * @returns JSON object of the users settings
+ */
+export async function getUserSettings(UID:string) {
+  log("Getting user settings for " + UID, "getUserSettings")
+  let UsersCollection = collection(db, "users");
+  let userSettings:UserSettings = {} as UserSettings;
+  const querySnapshot = await getDocs(UsersCollection);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid == UID) {
+      userSettings = doc.data() as UserSettings;
+    }
+  });
+  return userSettings;
+}
 
 /**
  * Syncs the users settings to the DB
