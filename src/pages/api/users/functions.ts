@@ -1,4 +1,5 @@
 import {
+  User,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   setPersistence,
@@ -10,12 +11,12 @@ import log from "../log";
 
 
 /**
- * Wrapper for firebases auth function.
+ * Wrapper for firebaokses auth function.
  * @param email The inputted email
  * @param password The inputted password
  * @returns {Promise} .
  */
-export async function authUser(email: string, password: string, router:any): Promise<any> {
+export async function authUser(email: string, password: string, router: any): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
   setPersistence(auth, browserLocalPersistence).then(() => {
     log("Persisitence set to local", "authUser/setPersistence")
@@ -26,13 +27,13 @@ export async function authUser(email: string, password: string, router:any): Pro
       const user = userCredential.user;
       //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
       router.push("/settings?uid=" + user.uid);
-      return {error: false, user};
+      return { error: false, user };
     })
     .catch((error) => {
       log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
       const errorCode = error.code;
       const errorMessage = error.message;
-      return {error: true, code: errorCode, message: errorMessage};
+      return { error: true, code: errorCode, message: errorMessage };
     });
   }).catch((error) => {
     // Handle Errors here.
@@ -88,5 +89,21 @@ export async function syncUserSettings(settings:UserSettings) {
   let UsersCollection = collection(db, "users");
   await addDoc(UsersCollection, settings);
   return settings;
+}
+
+auth.onAuthStateChanged((user: User | null) => {
+  console.log(user?.displayName)
+  listenForUserFnArray.forEach((fn) => { fn(user) })
+})
+
+var listenForUserFnArray: Array<(user: User | null) => void> = []
+
+
+/**
+ * @description Add a listener for when a user auth state change is observed. It'll be passed the new user data.
+ * @param callbackFn The callback function to be run when a user auth state change is observed.
+ */
+export function listenForUser(callbackFn: (user: User | null) => void) {
+  listenForUserFnArray.push(callbackFn)
 }
 

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import log from './api/log';
-import { syncUserSettings } from './api/users/db';
+import { syncUserSettings } from './api/users/functions';
 
 export default function UserSettings() {
   const router = useRouter();

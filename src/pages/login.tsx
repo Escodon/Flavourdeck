@@ -2,12 +2,12 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import log from "./api/log";
-import { authUser, newUser } from "./api/users/db";
+import { authUser, newUser } from "./api/users/functions";
 
 
 log("Login page called", "login"); 
 
-export default function Login({ Component, pageProps }: AppProps) {
+export default function Page({ Component, pageProps }: AppProps) {
 	const [res, setRes] = useState(''); 
 	const router = useRouter();
 	log("Rendering login page", "login");
