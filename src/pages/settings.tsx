@@ -21,7 +21,10 @@ export default function UserSettings() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Settings - {user ? user.email : 'No user logged in'}</h1>
+        <h1>Privacy Policy</h1>
+        Your privacy and the protection of your data is very important to us. This Privacy
+        Policy sets how we approach the management of such. Flavourdeck Premium users are
+        not affected by this change.
       </main>
     </>
   )

@@ -1,33 +1,37 @@
-import { useSpring, animated } from "@react-spring/web";
+import { useState } from "react"
 
-export default function BouncyButton(props: any) {
-    const [springs, api] = useSpring(() => ({
-        from: { x: 0 },
-    }))
-
-    const handleClick = () => {
-        api.start({
-            from: {
-                x: 50,
-            },
-            to: {
-                x: 100,
-            },
-        })
-    }
-
-    return (
-        <animated.div
-            onClick={handleClick}
-            style={{
-                width: 80,
-                height: 80,
-                background: '#ff6d6d',
-                borderRadius: 8,
-                ...springs,
-            }}
-        />
-    )
+interface BouncyButtonProps {
+    shouldBounceEval: () => boolean
+    [key: string]: any
 }
 
+var hi:BouncyButtonProps = {
+    shouldBounceEval: () => {return true},
+    hi: 'yo'
+}
+export default function BouncyButton(props: BouncyButtonProps) {
+    type TransformStyle = undefined | string
+    const [transformStyle, setTransformStyle] = useState<TransformStyle>(undefined)
 
+    function feedback(): void {
+        if (props.shouldBounceEval()) {
+            setTransformStyle('scale(1.15)')
+
+            setTimeout(() => {
+                setTransformStyle('scale(1.0)')
+                setTimeout(() => {
+                    setTransformStyle(undefined)
+                })
+
+            }, 250)
+
+            
+        } else {
+            // no animation
+        }
+    }
+
+    return <button style={{
+        transform: transformStyle
+    }} onClick={feedback} {...props}>{props.children}</button>
+}

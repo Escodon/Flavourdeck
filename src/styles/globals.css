@@ -5,12 +5,13 @@
   --sansSerif: 'Onest';
   --headings: 'Onest';
   --smallBorderRadius: 11px;
-  --primaryAccentColour: rgb(214, 90, 90)
+  --primaryAccentColour: rgb(214, 125, 90);
 }
 
 main {
-  padding-top: 100px;
-  padding-left: 8px;
+  padding-top: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .topBar {
@@ -23,13 +24,20 @@ main {
   height: fit-content;
   padding-top: 11px;
   padding-bottom: 11px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 24px;
+  padding-right: 15px;
   font-family: var(--sansSerif);
   transition: background 0.3s;
   box-sizing: border-box;
   z-index: 4000;
   /* border-bottom: 1px solid gainsboro; */
+}
+
+.topBarScrolled {
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background 0.3s;
+  border-bottom: 1px solid var(--borderGrey) !important;
+  backdrop-filter: blur(10px);
 }
 
 .topBar img {
@@ -85,11 +93,11 @@ button {
 
 .primary {
   /* background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%); */
-  background: linear-gradient(180deg, rgb(218, 147, 147) 0%, var(--primaryAccentColour) 100%);
+  background: linear-gradient(180deg, rgb(218, 169, 147) 0%, var(--primaryAccentColour) 100%);
   /* background-color: var(--primaryAccentColour); */
   /* border: 0.4px solid rgb(186, 186, 186); */
   border-radius: var(--smallBorderRadius);
-  padding-top: 10px;
+  padding-top: 10.3px;
   padding-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;
