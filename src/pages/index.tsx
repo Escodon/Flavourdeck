@@ -20,7 +20,9 @@ export default function Home() {
       <main>
         <h1>Welcome to Flavourdeck!</h1>
 
-        <BouncyButton/>
+        <BouncyButton shouldBounceEval={() => { return true }} className='primary'>
+          Start cooking
+        </BouncyButton>
       </main>
     </>
   )
