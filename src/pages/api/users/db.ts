@@ -77,6 +77,12 @@ export interface UserSettings {
   darkMode: boolean
 }
 
+
+/**
+ * Syncs the users settings to the DB
+ * @param settings 
+ * @returns 
+ */
 export async function syncUserSettings(settings:UserSettings) {
   log(`Syncing user settings for ${settings.email}`, "syncUserSettings");
   let UsersCollection = collection(db, "users");
