@@ -26,8 +26,8 @@ export default function Page({ Component, pageProps }: AppProps) {
 		try {
 			const response = await authUser(email, password, router);
 			if (response.user) {
-				log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
-				localStorage.setItem("user", JSON.stringify(response.user));
+				//log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
+				//localStorage.setItem("user", JSON.stringify(response.user));
 			}			
 				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
 				router.push("/settings?uid=" + response.uid);

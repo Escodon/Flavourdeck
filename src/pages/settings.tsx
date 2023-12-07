@@ -6,9 +6,10 @@ import { getUserSettings, syncUserSettings } from "./api/users/functions";
 
 export default async function UserSettings() {
 	const router = useRouter();
-	const { uid } = router.query;
+  const { uid } = router.query;
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
+  console.log("uid:", uid);
 	if (typeof uid !== "string") {
 		log(
 			"FATAL ERROR: UID isnt a string! Redirecting to /404...",
@@ -18,7 +19,6 @@ export default async function UserSettings() {
 		return;
 	}
   let user = await getUserSettings(uid);
-
 
 	/**
 	 * Updates the user settings

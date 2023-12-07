@@ -26,7 +26,7 @@ export async function authUser(email: string, password: string, router: any): Pr
       log(`User with email ${email} authenticated`, "authUser")
       const user = userCredential.user;
       //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
-      router.push("/settings?uid=" + user.uid);
+      //router.push("/settings?uid=" + user.uid);
       return { error: false, user };
     })
     .catch((error) => {
