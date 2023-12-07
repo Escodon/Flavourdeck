@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import log from "./api/log";
-import { authUser } from "./api/users/db";
+import { authUser, newUser } from "./api/users/db";
 
 
 log("Login page called", "login"); 
@@ -11,7 +11,7 @@ export default function Login({ Component, pageProps }: AppProps) {
 	const [res, setRes] = useState(''); 
 	const router = useRouter();
 	log("Rendering login page", "login");
-	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+	async function handleLogin(e: FormEvent<HTMLFormElement>) {
 		log("Handling login", "login/handleSubmit");
 		e.preventDefault();
 		const target = e.target as typeof e.target & {
@@ -43,11 +43,28 @@ export default function Login({ Component, pageProps }: AppProps) {
 			return false;
 		}
 	}
+	async function handleSignup(e: FormEvent<HTMLFormElement>) {
+		log("Handling signup", "login/handleSignup");
+		e.preventDefault();
+		const target = e.target as typeof e.target & {
+			email: { value: string };
+			password: { value: string };
+			displayName: { value: string };
+		};
+		if (target.email.value == null || target.password.value == null || target.displayName.value == null) {
+			log("Error: Null value detected! Aborting...", "login/handleSignup");
+			setRes("Please fill in all the boxes!");
+			return false;
+		}
+		await newUser(target.email.value, target.password.value, router);
+
+	}
+
 	return (
 		<main>
 			<span>
 				<div className="form1">
-					<form className="loginForm" onSubmit={handleSubmit}>
+					<form className="loginForm" onSubmit={handleLogin}>
 						<h1>Log in</h1>
 						<input name="email" type="text" placeholder="Email" />
 						<br />
@@ -56,6 +73,22 @@ export default function Login({ Component, pageProps }: AppProps) {
 						<br />
 						<button className="primary" type="submit">
 							Log in
+						</button>
+						<p>{res}</p>
+					</form>
+				</div>
+				<div className="form2">
+					<form className="loginForm" onSubmit={handleSignup}>
+						<h1>Sign Up</h1>
+						<input name="email" type="text" placeholder="Email" />
+						<br />
+
+						<input name="password" type="password" placeholder="Password" />
+						<br />
+						<input name="displayName" type="text" placeholder="Name" />
+						<br />
+						<button className="primary" type="submit">
+							Sign Up
 						</button>
 						<p>{res}</p>
 					</form>

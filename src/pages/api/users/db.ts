@@ -1,5 +1,7 @@
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
+  setPersistence,
   signInWithEmailAndPassword
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
@@ -15,12 +17,14 @@ import log from "../log";
  */
 export async function authUser(email: string, password: string, router:any): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
+  setPersistence(auth, browserLocalPersistence).then(() => {
+    log("Persisitence set to local", "authUser/setPersistence")
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       log(`User with email ${email} authenticated`, "authUser")
       const user = userCredential.user;
-      log("DEBUG: " + JSON.stringify(userCredential), "authUser")
+      //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
       router.push("/settings?uid=" + user.uid);
       return {error: false, user};
     })
@@ -30,6 +34,11 @@ export async function authUser(email: string, password: string, router:any): Pro
       const errorMessage = error.message;
       return {error: true, code: errorCode, message: errorMessage};
     });
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
 }
 
 
@@ -40,7 +49,7 @@ export async function authUser(email: string, password: string, router:any): Pro
  * @param password The inputted password
  * @returns The user object if successful, Error if not.
  */
-export async function newUser(email: string, password: string) {
+export async function newUser(email: string, password: string, router:any) {
   log(`Creating user with email ${email}`, "newUser");
   createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
@@ -51,6 +60,7 @@ export async function newUser(email: string, password: string) {
       let uid = user.uid;
       let UsersCollection = collection(db, "users");
       await addDoc(UsersCollection, { uid, email, displayName });
+      router.push("/settings?uid=" + uid);
       return user;
     })
     .catch((error) => {

@@ -7,15 +7,21 @@ import { syncUserSettings } from './api/users/db';
 export default function UserSettings() {
   const router = useRouter();
   const { uid } = router.query;
-  const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [name, setName] = useState(null);
-
-  type user = {
-    uid: string,
-    displayName: string,
-    email: string, 
-  }
+  //const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  type User = {
+    displayName: string | null;
+    email: string | null;
+    uid: string | null;
+  };
+  
+  const [user, setUser] = useState<User | null>(null);
+  // type user = {
+  //   uid: string,
+  //   displayName: string,
+  //   email: string, 
+  // }
   
 
   useEffect(() => {
@@ -30,23 +36,25 @@ export default function UserSettings() {
   
   /**
    * Updates the user settings
-   * @returns {void}
+   * @returns {void} 
    */
   function updateSettings() {
+    log("Updating user settings", "settings/updateSettings")
     if (user == null) {console.error("User is null! Cannot update settings!"); return}
     log("Updating user settings (local store)", "settings/updateSettings")
-    let name = user.displayName ?? 'Unknown'; // If user.displayName is null, 'defaultName' will be used
-    let email = user.email ?? 'error@escodon.com'; // If user.email is null, 'defaultEmail' will be used
+    let newName = name ?? 'Unknown'; // If name is null
+    let newEmail = email ?? localStorage.getItem("user").email ?? "e"; // If email is null
     let newSettings = {
-      name: name,
-      email: email,
+      name: newName,
+      email: newEmail,
     }
+    console.log(newSettings)
     localStorage.setItem('userSettings', JSON.stringify(newSettings));
     log("Complete! Updating user settings (database)", "settings/updateSettings")
     let settingsToDB = {
       uid: user.uid ?? "123456",
-      displayName: name,
-      email: email,
+      displayName: newName,
+      email: newEmail,
       darkMode: false, // Add this line, set it to the desired value
     }
     syncUserSettings(settingsToDB); // Pass the settingsToDB object to the syncUserSettings function
@@ -66,11 +74,11 @@ export default function UserSettings() {
         <h1>Settings - {user ? user.email : 'No user logged in'}</h1>
         <p>UID: {uid}</p>
         <h2>User profile:</h2>
-        <p>Name: {user ? user.displayName : "Unknown"}</p>
-        <input type="text" placeholder="Change your name" />
+        <p>Name: {user ? /*JSON.stringify(*/localStorage.getItem("userSettings") : "Unknown"}</p>
+        <input type="text" placeholder="Change your name" onChange={e => setName(e.target.value)} />
         <br />
         <p>Email: {user ? user.email : "unknown email"}</p>
-        <input type="text" placeholder="Change your email" />
+        <input type="text" placeholder="Change your email" onChange={e => setEmail(e.target.value)} />
         <br />
         <p>Profile picture:</p>
         <input type="file"/>
