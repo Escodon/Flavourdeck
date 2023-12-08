@@ -1,15 +1,28 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import log from "./api/log";
 import { authUser, newUser } from "./api/users/functions";
+import withRouter from "next/router";
 
 
-log("Login page called", "login"); 
+log("Login page called", "login");
 
 export default function Page({ Component, pageProps }: AppProps) {
-	const [res, setRes] = useState(''); 
+	const [res, setRes] = useState('');
+	const [redirectData, setRedirectData] = useState<{ redirectDisplayText: any, redirectURL: string }>({
+		redirectDisplayText: 'Continue to Flavourdeck',
+		redirectURL: '/'
+	})
 	const router = useRouter();
+	useEffect(() => {
+		if (router.query.then && router.query.thenDisplayName) {
+			setRedirectData({
+				redirectDisplayText: <span>To continue to <strong>{router.query.thenDisplayName.toString()}</strong></span>,
+				redirectURL: router.query.then.toString()
+			})
+		}
+	}, [])
 	log("Rendering login page", "login");
 	async function handleLogin(e: FormEvent<HTMLFormElement>) {
 		log("Handling login", "login/handleSubmit");
@@ -25,13 +38,14 @@ export default function Page({ Component, pageProps }: AppProps) {
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password, router);
-			if (response.user) {
+			// if (response.user) {
+				log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
+				router.push(redirectData.redirectURL);
 				//log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
 				//localStorage.setItem("user", JSON.stringify(response.user));
-			}			
-				log("Logged in! Redirecting to /settings?uid=" + response.uid, "login/handleSubmit")
-				router.push("/settings?uid=" + response.uid);
-				return false;
+			// }
+
+			return false;
 		} catch (error) {
 			if (error != null) {
 				log("Error: " + error, "login/handleSubmit");
@@ -66,6 +80,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 				<div className="form1">
 					<form className="loginForm" onSubmit={handleLogin}>
 						<h1>Log in</h1>
+						{redirectData.redirectDisplayText}<br /><br />
 						<input name="email" type="text" placeholder="Email" />
 						<br />
 

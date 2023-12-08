@@ -5,26 +5,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { app } from './api/firebase'
+import { useRouter } from 'next/router'
 
 
 const db = getFirestore(app)
 
-//listenForUser((user) => {
-  //alert('hi!' + user?.uid)
-//})
+
 
 export default function App({ Component, pageProps }: AppProps) {
   const [topBarClass, setTopBarClass] = useState('topBar')
 
-  // setTimeout(() => {
-  //   window.addEventListener('scroll', (ev) => {
-  //     if (window.scrollY > 0) {
-  //       setTopBarClass('topBar topBarScrolled')
-  //     } else {
-  //       setTopBarClass('topBar')
-  //     }
-  //   })
-  // }, 1)
+  setTimeout(() => {
+    window.addEventListener('scroll', (ev) => {
+      if (window.scrollY > 0) {
+        setTopBarClass('topBar topBarScrolled')
+      } else {
+        setTopBarClass('topBar')
+      }
+    })
+  }, 1)
 
   return <span>
     <div id='topBar' className={topBarClass}>

@@ -117,3 +117,7 @@ button {
   transform: scale(0.9);
   box-shadow: 4px 4px 14px rgb(215, 215, 215);
 }
+
+.twoColumn {
+  display: grid;
+}
