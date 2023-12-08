@@ -16,25 +16,25 @@ import log from "../log";
  * @param password The inputted password
  * @returns {Promise} .
  */
-export async function authUser(email: string, password: string, router: any): Promise<any> {
+export async function authUser(email: string, password: string): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
   setPersistence(auth, browserLocalPersistence).then(() => {
     log("Persisitence set to local", "authUser/setPersistence")
-  return signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      log(`User with email ${email} authenticated`, "authUser")
-      const user = userCredential.user;
-      //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
-      //router.push("/settings?uid=" + user.uid);
-      return { error: false, user };
-    })
-    .catch((error) => {
-      log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      return { error: true, code: errorCode, message: errorMessage };
-    });
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        log(`User with email ${email} authenticated`, "authUser")
+        const user = userCredential.user;
+        //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
+        //router.push("/settings?uid=" + user.uid);
+        return { error: false, user };
+      })
+      .catch((error) => {
+        log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return { error: true, code: errorCode, message: errorMessage };
+      });
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -50,7 +50,7 @@ export async function authUser(email: string, password: string, router: any): Pr
  * @param password The inputted password
  * @returns The user object if successful, Error if not.
  */
-export async function newUser(email: string, password: string, router:any) {
+export async function newUser(email: string, password: string) {
   log(`Creating user with email ${email}`, "newUser");
   createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
@@ -61,7 +61,7 @@ export async function newUser(email: string, password: string, router:any) {
       let uid = user.uid;
       let UsersCollection = collection(db, "users");
       await addDoc(UsersCollection, { uid, email, displayName });
-      router.push("/settings?uid=" + uid);
+
       return user;
     })
     .catch((error) => {
@@ -86,10 +86,10 @@ export interface UserSettings {
  * @param UID The User ID to get the settings for
  * @returns JSON object of the users settings
  */
-export async function getUserSettings(UID:string) {
+export async function getUserSettings(UID: string) {
   log("Getting user settings for " + UID, "getUserSettings")
   let UsersCollection = collection(db, "users");
-  let userSettings:UserSettings = {} as UserSettings;
+  let userSettings: UserSettings = {} as UserSettings;
   const querySnapshot = await getDocs(UsersCollection);
   querySnapshot.forEach((doc) => {
     if (doc.data().uid == UID) {
@@ -104,7 +104,7 @@ export async function getUserSettings(UID:string) {
  * @param settings 
  * @returns 
  */
-export async function syncUserSettings(settings:UserSettings) {
+export async function syncUserSettings(settings: UserSettings) {
   log(`Syncing user settings for ${settings.email}`, "syncUserSettings");
   let UsersCollection = collection(db, "users");
   await addDoc(UsersCollection, settings);
@@ -112,7 +112,6 @@ export async function syncUserSettings(settings:UserSettings) {
 }
 
 auth.onAuthStateChanged((user: User | null) => {
-  console.log(user?.displayName)
   listenForUserFnArray.forEach((fn) => { fn(user) })
 })
 
