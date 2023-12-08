@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   listenForUser((userr) => {
     log("User logged in!", "_app/listenForUser")
     user = userr;
-    log("DEBUG: User is " + JSON.stringify(user), "_app/listenForUser")
+    //log("DEBUG: User is " + JSON.stringify(user), "_app/listenForUser")
   });
   function loginButtonText() {
     if (user) {
