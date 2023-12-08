@@ -25,8 +25,6 @@ export async function authUser(email: string, password: string, router: any): Pr
       // Signed in
       log(`User with email ${email} authenticated`, "authUser")
       const user = userCredential.user;
-      //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
-      //router.push("/settings?uid=" + user.uid);
       return { error: false, user };
     })
     .catch((error) => {
@@ -39,6 +37,7 @@ export async function authUser(email: string, password: string, router: any): Pr
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
+    return { error: true, code: errorCode, message: errorMessage };
   });
 }
 
