@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import log from './api/log';
 import { listenForUser, syncUserSettings } from './api/users/functions';
 
@@ -17,9 +17,10 @@ export default function UserSettings() {
     uid: string | null;
   };
 
-  const [user, setUser] = useState<User | null>(null);
+  //const [user, setUser] = useState<User | null>(null);
+  let user: User | null = null;
 
-  listenForUser(() => {
+  listenForUser((user) => {
     if (!user) {
       router.push({
         pathname: '/login',
@@ -30,16 +31,6 @@ export default function UserSettings() {
       })
     }
   })
-
-  // useEffect(() => {
-  //   // This code will only run on the client-side
-  //   const storedUser = localStorage.getItem('user');
-  //   if (storedUser) {
-  //     setUser(JSON.parse(storedUser));
-  //   } else {
-  //     router.push('/login');
-  //   }
-  // }, []);
 
   /**
    * Updates the user settings
@@ -62,12 +53,13 @@ export default function UserSettings() {
       uid: user.uid ?? "123456",
       displayName: newName,
       email: newEmail,
-      darkMode: false, // Add this line, set it to the desired value
+      darkMode: false, // To be implamented
     }
-    syncUserSettings(settingsToDB); // Pass the settingsToDB object to the syncUserSettings function
+    syncUserSettings(settingsToDB); 
   }
 
   log("Rendering user settings page for user with uid " + uid, "settings")
+  log("User is " + JSON.stringify(user), "settings")
 
   return (
     <>
@@ -79,9 +71,9 @@ export default function UserSettings() {
       </Head>
       <main>
         <h1>Settings</h1>
-        <p>UID: {uid}</p>
+        <p>UID: {JSON.stringify(user?.uid)}</p>
         <h2>User profile:</h2>
-        <p>Name: {user ? /*JSON.stringify(*/localStorage.getItem("userSettings") : "Unknown"}</p>
+        <p>Name: {user ? user.displayName : "Unknown"}</p>
         <input type="text" placeholder="Change your name" onChange={e => setName(e.target.value)} />
         <br />
         <p>Email: {user ? user.email : "unknown email"}</p>

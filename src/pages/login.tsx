@@ -1,9 +1,9 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import log from "./api/log";
 import { authUser, newUser } from "./api/users/functions";
-import withRouter from "next/router";
 
 
 log("Login page called", "login");
@@ -38,12 +38,14 @@ export default function Page({ Component, pageProps }: AppProps) {
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password, router);
-			// if (response.user) {
-				log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
-				router.push(redirectData.redirectURL);
-				//log("Setting user context to " + JSON.stringify(response.user), "login/handleSubmit")
-				//localStorage.setItem("user", JSON.stringify(response.user));
-			// }
+			if (response.error) {
+				log("Error: " + response.error, "login/handleSubmit");
+				setRes(response.error);
+				toast.error("test")
+				return false;
+			}
+			log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
+			router.push(redirectData.redirectURL);
 
 			return false;
 		} catch (error) {

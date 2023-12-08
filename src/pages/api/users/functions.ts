@@ -20,25 +20,24 @@ export async function authUser(email: string, password: string): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
   setPersistence(auth, browserLocalPersistence).then(() => {
     log("Persisitence set to local", "authUser/setPersistence")
-    return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        log(`User with email ${email} authenticated`, "authUser")
-        const user = userCredential.user;
-        //log("DEBUG: " + JSON.stringify(userCredential), "authUser")
-        //router.push("/settings?uid=" + user.uid);
-        return { error: false, user };
-      })
-      .catch((error) => {
-        log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        return { error: true, code: errorCode, message: errorMessage };
-      });
+  return signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      log(`User with email ${email} authenticated`, "authUser")
+      const user = userCredential.user;
+      return { error: false, user };
+    })
+    .catch((error) => {
+      log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return { error: true, code: errorCode, message: errorMessage };
+    });
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
+    return { error: true, code: errorCode, message: errorMessage };
   });
 }
 
