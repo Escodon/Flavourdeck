@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import log from "../api/log";
 let fireFile;
-console.log(process.env.apiKey)
+console.log(process.env.D)
 
 try {
   fireFile = require("../../../firebase.json"); //yes viggo i need to use require ;)
@@ -12,7 +12,7 @@ try {
 }
 let firebaseConfig;
 
-if (process.env.D == "P") {
+if (process.env.D != null) {
     console.log("Using production environment", "firefile")
   // In a production environment, use environment variables
   firebaseConfig = {
