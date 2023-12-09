@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import log from "../api/log";
 let fireFile;
+console.log(process.env.apiKey)
 
 try {
   fireFile = require("../../../firebase.json"); //yes viggo i need to use require ;)
