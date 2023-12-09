@@ -1,7 +1,7 @@
-import { log } from "console";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import log from "../api/log";
 let fireFile;
 
 try {
