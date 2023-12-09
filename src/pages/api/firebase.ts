@@ -23,6 +23,7 @@ if (process.env.D == "P") {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
   };
+  log("Firebase config: " + JSON.stringify(firebaseConfig), "firefile")
 } else {
   // In a local environment, use the firebase.json file
   firebaseConfig = {
