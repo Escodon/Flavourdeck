@@ -1,8 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import fireFile from "../../../firebase.json";
+let fireFile;
 
+try {
+  fireFile = require("../../../firebase.json"); //yes viggo i need to use require ;)
+} catch (error) {
+  fireFile = {};
+}
 let firebaseConfig;
 
 if (process.env.NODE_ENV === 'production') {
