@@ -1,3 +1,4 @@
+import { log } from "console";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -10,7 +11,8 @@ try {
 }
 let firebaseConfig;
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.D == "P") {
+    log("Using production environment", "firefile")
   // In a production environment, use environment variables
   firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
