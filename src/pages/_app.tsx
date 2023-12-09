@@ -16,15 +16,15 @@ const db = getFirestore(app)
 export default function App({ Component, pageProps }: AppProps) {
   const [topBarClass, setTopBarClass] = useState('topBar')
 
-  setTimeout(() => {
-    window.addEventListener('scroll', (ev) => {
-      if (window.scrollY > 0) {
-        setTopBarClass('topBar topBarScrolled')
-      } else {
-        setTopBarClass('topBar')
-      }
-    })
-  }, 1)
+  // setTimeout(() => {
+  //   window.addEventListener('scroll', (ev) => {
+  //     if (window.scrollY > 0) {
+  //       setTopBarClass('topBar topBarScrolled')
+  //     } else {
+  //       setTopBarClass('topBar')
+  //     }
+  //   })
+  // }, 1)
   let user:any = null;
   listenForUser((userr) => {
     log("User logged in!", "_app/listenForUser")

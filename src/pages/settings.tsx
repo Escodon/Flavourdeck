@@ -55,7 +55,7 @@ export default function UserSettings() {
 			"settings/updateSettings"
 		);
 		let settingsToDB = {
-			uid: user.uid,
+			uid: localUser.uid,
 			displayName: newName,
 			email: newEmail,
 			darkMode: false, // To be implamented
@@ -64,7 +64,6 @@ export default function UserSettings() {
 	}
 
 	log("Rendering user settings page for user with uid " + localUser?.uid, "settings");
-	log("User iss " + JSON.stringify(localUser), "settings");
 
 	return (
 		<>
