@@ -37,7 +37,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 		if (email == "t") { console.log("Test email used!"); router.push('/settings?uid=test'); return true }
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
-			const response = await authUser(email, password, router);
+			const response = await authUser(email, password);
 			if (response.error) {
 				log("Error: " + response.error, "login/handleSubmit");
 				setRes(response.error);
@@ -72,7 +72,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 			setRes("Please fill in all the boxes!");
 			return false;
 		}
-		await newUser(target.email.value, target.password.value, router);
+		await newUser(target.email.value, target.password.value);
 
 	}
 
