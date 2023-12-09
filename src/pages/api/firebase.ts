@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import log from "../api/log";
+export const runtime = 'edge';
 let fireFile;
 console.log(process.env.E)
 

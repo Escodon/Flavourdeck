@@ -8,6 +8,7 @@ import {
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import log from "../log";
+export const runtime = 'edge';
 
 
 /**

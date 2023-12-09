@@ -1,5 +1,6 @@
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
 import { app } from "../firebase";
+export const runtime = 'edge';
 
 
 const storage = getStorage(app);

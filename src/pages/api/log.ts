@@ -11,3 +11,4 @@ export default function log(message: string, funcName: string) {
   console.log(` ✓ [FD] ${funcName}: ${message}`)
     // } else return
 }
+export const runtime = 'edge';

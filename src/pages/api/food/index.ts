@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { searchRecipes } from './search';
+export const runtime = 'edge';
 
 type Data = {
   body: string

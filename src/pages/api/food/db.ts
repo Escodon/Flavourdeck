@@ -2,6 +2,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import log from "../log";
 import { updateIndex } from "./search";
+export const runtime = 'edge';
 
 /* 
 * @description The default way of storing ingredents

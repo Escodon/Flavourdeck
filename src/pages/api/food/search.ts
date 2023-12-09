@@ -3,6 +3,7 @@ import * as JSsearch from "js-search";
 import { db } from "../firebase";
 import log from "../log";
 import Recipe, { getRecipeIndex } from "./db";
+export const runtime = 'edge';
 
 
 /**
