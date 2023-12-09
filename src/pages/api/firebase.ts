@@ -13,7 +13,7 @@ try {
 let firebaseConfig;
 
 if (process.env.D == "P") {
-    log("Using production environment", "firefile")
+    console.log("Using production environment", "firefile")
   // In a production environment, use environment variables
   firebaseConfig = {
     apiKey: process.env.apiKey,
