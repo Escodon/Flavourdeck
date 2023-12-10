@@ -1,12 +1,15 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { getPublicUserInfo } from '../api/users/functions';
 
 
 
 export default function Profile() {
 	const router = useRouter();
     const params = router.query;
-    console.log(params.uid)
+    getPublicUserInfo(params.uid as string).then((user) => {
+        console.log(user)
+    })
   return (
     <>
       <Head>

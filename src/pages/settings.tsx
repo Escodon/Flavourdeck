@@ -32,9 +32,7 @@ export default function UserSettings() {
 				},
 			});
 		} else {
-			// Set localUser to the new user
 			setLocalUser(user);
-			//console.log(JSON.stringify(user));
 			log("User signed in. Continuing...", "settings/listenForUser");
 			if (uid == undefined || uid == null) {
 				log("UID is null! Manually adding it...", "settings/uidCheck");
