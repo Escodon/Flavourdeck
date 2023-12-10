@@ -1,11 +1,5 @@
-import Head from 'next/head'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faCalendar } from '@fortawesome/free-regular-svg-icons'
 import BouncyButton from '@/components/bouncyButton'
-// import { Inter } from 'next/font/google'
-// import styles from '@/styles/Home.module.css'
-
-// const inter = Inter({ subsets: ['latin'] })
+import Head from 'next/head'
 
 
 export default function Home() {
