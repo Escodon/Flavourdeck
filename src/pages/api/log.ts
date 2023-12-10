@@ -8,7 +8,7 @@
  */
 export default function log(message: string, funcName: string) {
     // if (process.env.DEV === 'true') {
-  console.log(` ✓ [FD] ${funcName}: ${message}`)
+  console.log(`[FD] ${funcName}: ${message}`)
     // } else return
 }
 export const runtime = 'edge';

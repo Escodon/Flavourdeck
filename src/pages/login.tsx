@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import log from "./api/log";
 import { authUser, newUser } from "./api/users/functions";
 
@@ -17,10 +16,18 @@ export default function Page({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 	useEffect(() => {
 		if (router.query.then && router.query.thenDisplayName) {
+			log("Redirect data: " + router.query.then + " " + router.query.thenDisplayName, "login")
 			setRedirectData({
 				redirectDisplayText: <span>To continue to <strong>{router.query.thenDisplayName.toString()}</strong></span>,
 				redirectURL: router.query.then.toString()
 			})
+		} else {
+			log("No redirect data detected! Setting to default", "login")
+			setRedirectData({
+				redirectDisplayText: 'Continue to Flavourdeck',
+				redirectURL: '/'
+			})
+		
 		}
 	}, [])
 	log("Rendering login page", "login");
@@ -38,12 +45,12 @@ export default function Page({ Component, pageProps }: AppProps) {
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
 			const response = await authUser(email, password);
-			if (response.error) {
-				log("Error: " + response.error, "login/handleSubmit");
-				setRes(response.error);
-				toast.error("test")
-				return false;
-			}
+			// if (response.error != null) { //it cannot find error. this needs fixing!
+			// 	log("Error: " + response.error, "login/handleSubmit");
+			// 	setRes(response.error);
+			// 	toast.error("test")
+			// 	return false;
+			// }
 			log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
 			router.push(redirectData.redirectURL);
 
