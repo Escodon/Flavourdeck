@@ -34,6 +34,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 	log("Rendering login page", "login");
 	async function handleLogin(e: FormEvent<HTMLFormElement>) {
 		log("Handling login", "login/handleSubmit");
+		console.log(process.env.authDomain)
 		e.preventDefault();
 		const target = e.target as typeof e.target & {
 			email: { value: string };
