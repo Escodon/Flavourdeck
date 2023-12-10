@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
+import { toggleLoggedIn } from "./_app";
 import log from "./api/log";
 import { authUser, newUser } from "./api/users/functions";
 
@@ -52,6 +53,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 			// 	return false;
 			// }
 			log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
+			toggleLoggedIn()
 			router.push(redirectData.redirectURL);
 
 			return false;

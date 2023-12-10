@@ -1,6 +1,8 @@
+import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { auth } from "./api/firebase";
 import log from "./api/log";
 import { listenForUser } from "./api/users/functions";
 
@@ -32,7 +34,7 @@ export default function UserSettings() {
 		} else {
 			// Set localUser to the new user
 			setLocalUser(user);
-			console.log(JSON.stringify(user));
+			//console.log(JSON.stringify(user));
 			log("User signed in. Continuing...", "settings/listenForUser");
 		}
 	});
@@ -60,7 +62,18 @@ export default function UserSettings() {
 			email: newEmail,
 			darkMode: false, // To be implamented
 		};
-		//syncUserSettings(settingsToDB);
+		if (auth.currentUser) {
+			updateProfile(auth.currentUser, {
+			  displayName: newName,
+			  photoURL: ""
+			})
+			  .then(() => {
+				log('User display name updated successfully', "settings/updateSettings");
+			  })
+			  .catch((error) => {
+				console.error('Error updating user display name', error);
+			  });
+		  }
 	}
 
 	log("Rendering user settings page for user with uid " + localUser?.uid, "settings");

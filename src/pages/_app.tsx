@@ -10,11 +10,15 @@ import { listenForUser } from './api/users/functions'
 
 
 const db = getFirestore(app)
-
-
+var loggedIn = false;
+export function toggleLoggedIn() {
+  loggedIn = !loggedIn;
+  return loggedIn;
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   const [topBarClass, setTopBarClass] = useState('topBar')
+  const [buttonText, setButtonText] = useState('Log in')
 
   // setTimeout(() => {
   //   window.addEventListener('scroll', (ev) => {
@@ -41,11 +45,11 @@ export default function App({ Component, pageProps }: AppProps) {
    * @returns Either the text or the link
    */
   function loginButtonText(text:boolean=false, link:boolean=false) {
-    if (!loggedIn) {
-      log("User not logged in!", "_app/listenForUser")
+    if (loggedIn) {
+      log("User logged in!", "_app/loginButtonText")
       return "Log out"
     } else {
-      log("User logged in!", "_app/listenForUser")
+      log("User not logged in!", "_app/loginButtonText")
       return "Log in"
     }
   }
@@ -53,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div id='topBar' className={topBarClass}>
       <Image alt='Escodon logo' onClick={() => {('/')}} style={{ marginTop: '6px', marginBottom: '2px', float: 'left', cursor: 'pointer' }} width='22' height='22' src={'/assets/logo_simple.svg'} />
       <Link href="/login">
-        <button className='primary' style={{ float: 'right', marginRight: '0' }} >{loginButtonText()}</button>
+        <button className='primary' style={{ float: 'right', marginRight: '0' }} >{loginButtonText(true, false)}</button>
       </Link>
       {/* <button className='primary' style={{ float: 'right' }}>Sign up</button> */} {/* We dont need two buttons*/}
     </div>
