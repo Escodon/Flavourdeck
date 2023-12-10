@@ -1,8 +1,12 @@
-import BouncyButton from '@/components/bouncyButton'
-import Head from 'next/head'
+import BouncyButton from '@/components/bouncyButton';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 
 
 export default function Home() {
+  const router = useRouter();
+  function push(path:string) {router.push(path)}
   return (
     <>
       <Head>
@@ -17,6 +21,10 @@ export default function Home() {
         <BouncyButton shouldBounceEval={() => { return true }} className='primary'>
           Start cooking
         </BouncyButton>
+        {/* <BouncyButton shouldBounceEval={() => { return true }}  className='primary'>
+          Start cooking
+        </BouncyButton> */}
+        <button className='primary' onClick={() => {push('/settings')}}>Settings</button>
       </main>
     </>
   )

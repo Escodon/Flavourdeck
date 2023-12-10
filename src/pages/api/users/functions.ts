@@ -126,3 +126,14 @@ export function listenForUser(callbackFn: (user: User | null) => void) {
   listenForUserFnArray.push(callbackFn)
 }
 
+export async function getPublicUserInfo(uid:string) {
+  let UsersCollection = collection(db, "users");
+  let userSettings: UserSettings = {} as UserSettings;
+  const querySnapshot = await getDocs(UsersCollection);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid == uid) {
+      userSettings = doc.data() as UserSettings;
+    }
+  });
+  return userSettings;
+}

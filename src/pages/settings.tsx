@@ -8,7 +8,7 @@ import { listenForUser } from "./api/users/functions";
 
 export default function UserSettings() {
 	const router = useRouter();
-	const { uid } = router.query;
+	var { uid } = router.query;
 	//const [user, setUser] = useState("");
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
@@ -36,8 +36,14 @@ export default function UserSettings() {
 			setLocalUser(user);
 			//console.log(JSON.stringify(user));
 			log("User signed in. Continuing...", "settings/listenForUser");
+			if (uid == undefined || uid == null) {
+				log("UID is null! Manually adding it...", "settings/uidCheck");
+				console.log(localUser?.uid)
+				router.push("/settings?uid=" + localUser?.uid);
+			}
 		}
 	});
+	
 
 	/**
 	 * Updates the user settings
