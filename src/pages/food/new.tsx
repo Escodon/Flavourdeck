@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import Recipe, { instruction, newRecipe } from '../api/food/functions';
+import Recipe, { instruction } from '../api/food/functions';
 import log from '../api/log';
 
 export default function NewFood() {
@@ -16,7 +16,7 @@ export default function NewFood() {
 
   const getValues = async () => {
     const values = instructionBox.map(box => box.value); 
-    log(values.toString(), "newFood/getValues")
+    //log("DEBUG:" + values.toString(), "newFood/getValues")
     let instructionsFormatted: instruction[] = [];
     var i;
     for (i in values) {
@@ -34,15 +34,15 @@ export default function NewFood() {
       tags: [],
     }
     log(JSON.stringify(toDB), "newFood/getValues")
-    await newRecipe(toDB, "test", false).then((res) => {
-      log(JSON.stringify(res), "newFood/getValues")
-    })
+    // await newRecipe(toDB, "test", false).then((res) => {
+    //   log(JSON.stringify(res), "newFood/getValues")
+    // })
   };
 
   return (
     <>
       <Head>
-        <title>Flavourdeck</title>
+        <title>Create Recipe | Flavourdeck</title>
         <meta name="description" content="Create a recipe | Flavourdeck" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -60,6 +60,7 @@ export default function NewFood() {
             placeholder={`Instruction No.${index + 1}`}
             value={box.value}
             onChange={(e) => updateTextBox(box.id, e.target.value)}
+            style={{ display: 'block', margin: '9px 0', width: '100%', height: '300px' }}
           />
         ))}
         <button onClick={addTextBox}>New Instruction Box</button>

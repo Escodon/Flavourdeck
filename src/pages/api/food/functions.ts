@@ -78,10 +78,12 @@ export default interface Recipe {
 /**
  * 
  * @param recipe The recipe to add to the database. See {@link Recipe} for more information.
+ * @param UserID The ID of the user to add the recipe to. See {@link User.ID}.
+ * @param privateRecipe Whether the recipe should be private or not. Currently unused.
  * @returns True if successful, Error if not.
  */
 export async function newRecipe(recipe: Recipe, UserID: string, privateRecipe: boolean) {
-  log(`Adding recipe with ID ${recipe.ID}`, "newRecipe");
+  log(`Adding recipe "${recipe.name}"`, "newRecipe");
   let docRef = collection(db, "Users", UserID, "recipes");
   let res = await addDoc(docRef, recipe);
   await updateIndex(recipe, privateRecipe);
@@ -89,7 +91,7 @@ export async function newRecipe(recipe: Recipe, UserID: string, privateRecipe: b
     throw new Error("Failed to add recipe"); 
     //return false
   }
-  log(`Added recipe with ID ${recipe.ID}`, "newRecipe");
+  log(`Added recipe "${recipe.name}"`, "newRecipe");
   return true;
 }
 
