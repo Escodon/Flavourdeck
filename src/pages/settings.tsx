@@ -36,8 +36,8 @@ export default function UserSettings() {
 			log("User signed in. Continuing...", "settings/listenForUser");
 			if (uid == undefined || uid == null) {
 				log("UID is null! Manually adding it...", "settings/uidCheck");
-				console.log(localUser?.uid)
-				router.push("/settings?uid=" + localUser?.uid);
+				console.log(user?.uid) // Use user?.uid instead of localUser?.uid
+				router.push("/settings?uid=" + user?.uid);
 			}
 		}
 	});
@@ -60,12 +60,12 @@ export default function UserSettings() {
 			"Complete! Updating user settings (database)",
 			"settings/updateSettings"
 		);
-		let settingsToDB = {
-			uid: localUser.uid,
-			displayName: newName,
-			email: newEmail,
-			darkMode: false, // To be implamented
-		};
+		// let settingsToDB = {
+		// 	uid: localUser.uid,
+		// 	displayName: newName,
+		// 	email: newEmail,
+		// 	darkMode: false, // To be implamented
+		// };
 		if (auth.currentUser) {
 			updateProfile(auth.currentUser, {
 			  displayName: newName,
