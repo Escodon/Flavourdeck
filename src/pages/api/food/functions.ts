@@ -104,7 +104,7 @@ export async function getRecipe(ID: string) {
   log(`Getting recipe with ID ${ID}`, "getRecipe");
   const querySnapshot = await getDocs(collection(db, "recipes"));
   const recipes = querySnapshot.docs.map((doc) => doc.data() as Recipe);
-  const recipe = recipes.find((recipe) => recipe.ID === ID);
+  const recipe = recipes.find((recipe) => recipe.name === ID);
   log(`Got recipe with ID ${ID}`, "getRecipe");
   return recipe;
 }
@@ -121,7 +121,7 @@ export async function getRecipeIndex() {
   let recipes = querySnapshot.docs.map((doc) => doc.data() as Recipe);
   let recipeIndex: string[] = [];
   recipes.forEach(recipe => {
-    recipeIndex.push(recipe.ID + ": " + recipe.name);
+    recipeIndex.push(recipe.name + ": " + recipe.name);
   });
   return recipeIndex;
 
