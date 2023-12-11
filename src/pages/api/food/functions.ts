@@ -13,14 +13,14 @@ export interface ingredient {
   ID: number
   inDir: boolean
   
-};
+}; //for later
 
 /*
 * @description The default interface for instructions
 */
-interface instruction {
+export interface instruction {
   step: number
-  instruction: Array<string | ingredient>
+  instruction: String
   time: number //e.g for cooking & ect
 };
 
@@ -43,12 +43,17 @@ export default interface Recipe {
    * Uses Date.Now() to generate a unique ID.
    * @example "163456789"
    */
-  ID: string;
+  // ID: string; //we can get this from the doc ID
   /**
    * The name of the recipe.
    * @example "Pasta Sauce"
    */
   name: string;
+  /**
+   * The description of the recipe.
+   * @example "A simple pasta sauce recipe"
+   */
+  description: string;
   /**
    * The ingredients of the recipe.
    * Stored as an array

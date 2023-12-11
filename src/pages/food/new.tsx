@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import Recipe, { instruction, newRecipe } from '../api/food/functions';
+import log from '../api/log';
 
 export default function NewFood() {
   const [instructionBox, setTextBoxes] = useState([{ id: 0, value: '' }]);
@@ -12,9 +14,29 @@ export default function NewFood() {
     setTextBoxes(instructionBox.map(box => box.id === id ? { id, value: newValue } : box));
   };
 
-  const getValues = () => {
+  const getValues = async () => {
     const values = instructionBox.map(box => box.value); 
-    console.log(values);
+    log(values.toString(), "newFood/getValues")
+    let instructionsFormatted: instruction[] = [];
+    var i;
+    for (i in values) {
+      instructionsFormatted.push({
+        step: parseInt(i),
+        instruction: values[i],
+        time: 0
+      })
+    }
+    let toDB: Recipe = {
+      name: "test",
+      description: "",
+      ingredients: [],
+      instructions: instructionsFormatted,
+      tags: [],
+    }
+    log(JSON.stringify(toDB), "newFood/getValues")
+    await newRecipe(toDB, "test", false).then((res) => {
+      log(JSON.stringify(res), "newFood/getValues")
+    })
   };
 
   return (
