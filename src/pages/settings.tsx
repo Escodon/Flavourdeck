@@ -5,6 +5,8 @@ import { useState } from "react";
 import { auth } from "./api/firebase";
 import log from "./api/log";
 import { listenForUser } from "./api/users/functions";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SP } from "next/dist/shared/lib/utils";
 
 export default function UserSettings() {
 	const router = useRouter();
@@ -114,6 +116,7 @@ export default function UserSettings() {
 				<button className="primary" onClick={updateSettings}>
 					Save
 				</button>
+				<SpeedInsights />
 			</main>
 		</>
 	);

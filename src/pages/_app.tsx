@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
     log("User logged in!", "_app/listenForUser")
     user = userr;
     loggedIn = true;
-    console.log(loggedIn)
+    //console.log(loggedIn)
     //log("DEBUG: User is " + JSON.stringify(user), "_app/listenForUser")
   });
   /**
@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div id='topBar' className={topBarClass}>
       <Image alt='Escodon logo' onClick={pushToIndex} style={{ marginTop: '6px', marginBottom: '2px', float: 'left', cursor: 'pointer' }} width='22' height='22' src={'/assets/logo_simple.svg'} />
       <Link href="/login">
-        <button className='primary' style={{ float: 'right', marginRight: '0' }} >{loginButtonText(true, false)}</button>
+        <button className='primary' style={{ float: 'right', marginRight: '0' }} >{buttonText}</button>
       </Link>
       {/* <button className='primary' style={{ float: 'right' }}>Sign up</button> */} {/* We dont need two buttons*/}
     </div>
