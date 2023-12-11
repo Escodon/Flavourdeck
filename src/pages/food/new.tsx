@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 export default function newFood() {
-  const [selectedOption, setSelectedOption] = useState(null);
-  let tmpIngredients = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
+  const [textBoxes, setTextBoxes] = useState([0]);
+
+  const addTextBox = () => {
+    setTextBoxes([...textBoxes, textBoxes.length]);
+  };
+
   return (
     <>
       <Head>
@@ -22,8 +22,10 @@ export default function newFood() {
         <br />
         <input type="text" placeholder="Recipe description" />
         <br />
-        {/* <Select options={tmpIngredients} isMulti={true} placeholder="Select an ingredent" onChange={setSelectedOption}/> */}
-        
+        {textBoxes.map((_, index) => (
+          <input key={index} type="text" placeholder={`Instruction No.${index + 1}`} />
+        ))}
+        <button onClick={addTextBox}>New Instruction Box</button>
       </main>
     </>
   )
