@@ -30,8 +30,8 @@ jobs:
     - name: Add firefile 
       run: echo ${{ secrets.FIREFILE }} >> ./firebase.json
 
-    - name: Build
-      run: yarn run build
+    # - name: Build
+    #   run: yarn run build
 
     - name: Deploy
       run: vercel --token ${{ secrets.VERCEL_AUTH }}
