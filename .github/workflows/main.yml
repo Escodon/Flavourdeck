@@ -20,7 +20,7 @@ jobs:
       run: yarn && yarn add vercel
 
     - name: Add firefile 
-      run: echo ${{ secrets.FIREFILE}} >> ./firebase.json
+      run: echo ${{ secrets.FIREFILE }} >> ./firebase.json
 
     - name: Build
       run: yarn run build
