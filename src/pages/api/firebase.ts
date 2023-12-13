@@ -11,6 +11,7 @@ try {
 } catch (error) {
   fireFile = {};
 }
+console.log(fireFile)
 let firebaseConfig;
 
 if (process.env.E != null) {
