@@ -13,7 +13,7 @@ try {
 }
 let firebaseConfig;
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENVO == "prod") {
     console.log("Using production environment", "firefile")
   // In a production environment, use environment variables
   firebaseConfig = {
