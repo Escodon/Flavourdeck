@@ -4,17 +4,16 @@ import { getFirestore } from "firebase/firestore";
 import log from "../api/log";
 export const runtime = 'edge';
 let fireFile;
-console.log(process.env.E)
+
 
 try {
   fireFile = require("../../../firebase.json"); //yes viggo i need to use require ;)
 } catch (error) {
   fireFile = {};
 }
-console.log(fireFile)
 let firebaseConfig;
 
-if (process.env.E != null) {
+if (process.env.NODE_ENV === "production") {
     console.log("Using production environment", "firefile")
   // In a production environment, use environment variables
   firebaseConfig = {

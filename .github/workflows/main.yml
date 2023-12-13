@@ -25,7 +25,7 @@ jobs:
           ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
-      run: yarn && yarn add vercel
+      run: npm i vercel
 
     - name: Add firefile 
       run: echo ${{ secrets.FIREFILE }} >> ./firebase.json && ls
@@ -34,4 +34,4 @@ jobs:
     #   run: yarn run build
 
     - name: Deploy
-      run: vercel --token ${{ secrets.VERCEL_AUTH }} --yes
+      run: vercel --token ${{ secrets.VERCEL_AUTH }} --yes -e NODE_ENV=production
