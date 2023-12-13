@@ -34,12 +34,12 @@ export async function searchRecipes(search: string) {
 */
 export async function updateIndex(recipe: Recipe, privateRecipe: boolean) {
     if (privateRecipe) return;
-    log(`Indexing recipe with ID ${recipe.ID}`, "index");
+    log(`Indexing recipe with ID ${recipe.name}`, "index");
     const indexDoc = doc(db, 'recipes', 'index');
     let index = await getRecipeIndex();
-    let toPush = recipe.ID + ": " + recipe.name;
+    let toPush = recipe.name + ": " + recipe.name;
     index.push(toPush);
     await updateDoc(indexDoc, {index: index});
-    log(`Indexed recipe with ID ${recipe.ID}`, "index");
+    log(`Indexed recipe with ID ${recipe.name}`, "index");
     return;
 };
