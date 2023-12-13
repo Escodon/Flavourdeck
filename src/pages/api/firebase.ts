@@ -4,6 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import log from "../api/log";
 export const runtime = 'edge';
 let fireFile;
+console.log(process.env.NODE_ENVO + "is node env")
 
 
 try {
