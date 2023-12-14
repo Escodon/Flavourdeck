@@ -1,22 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import log from "../api/log";
-export const runtime = 'edge';
-let fireFile;
-console.log(process.env.NODE_ENVO + "is node env")
 
 
-// try {
-//   fireFile = require("../../../firebase.json"); //yes viggo i need to use require ;)
-// } catch (error) {
-//   fireFile = {};
-// }
+
 let firebaseConfig;
-
-// if (process.env.NODE_ENVO == "prod") {
-//     console.log("Using production environment", "firefile")
-//   // In a production environment, use environment variables
+if (process.env.NENV === 'dev') {
+  const firefile = require('../../../firebase.json');
+  firebaseConfig = {
+    apiKey: firefile.apiKey,
+    authDomain: firefile.authDomain,
+    projectId: firefile.projectId,
+    storageBucket: firefile.storageBucket,
+    messagingSenderId: firefile.messagingSenderId,
+    appId: firefile.appId,
+    measurementId: firefile.measurementId
+  };
+} else {
   firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
@@ -26,19 +26,7 @@ let firebaseConfig;
     appId: process.env.appId,
     measurementId: process.env.measurementId
   };
-  log("Firebase config: " + JSON.stringify(firebaseConfig), "firefile")
-// } else {
-//   // In a local environment, use the firebase.json file
-//   firebaseConfig = {
-//     apiKey: fireFile.apiKey,
-//     authDomain: fireFile.authDomain,
-//     projectId: fireFile.projectId,
-//     storageBucket: fireFile.storageBucket,
-//     messagingSenderId: fireFile.messagingSenderId,
-//     appId: fireFile.appId,
-//     measurementId: fireFile.measurementId
-//   };
-// }
+}
 
 /**
  * The firebase app object. 
