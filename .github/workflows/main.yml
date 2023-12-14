@@ -19,7 +19,7 @@ jobs:
     - name: Cache Node modules
       uses: actions/cache@v3
       with:
-        path: ~/.node_modules
+        path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -29,9 +29,6 @@ jobs:
 
     - name: Add firefile 
       run: echo ${{ secrets.FIREFILE }} >> ./firebase.json && ls
-
-    # - name: Build
-    #   run: yarn run build
 
     - name: Deploy
       run: vercel --token ${{ secrets.VERCEL_AUTH }} --yes -e NODE_ENV=production

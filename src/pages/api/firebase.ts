@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 
 
 let firebaseConfig;
-if (process.env.NENV === 'dev') {
+if (process.env.NENV == 'dev') {
   const firefile = require('../../../firebase.json');
   firebaseConfig = {
     apiKey: firefile.apiKey,
