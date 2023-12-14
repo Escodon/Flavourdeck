@@ -15,9 +15,7 @@
             "name": "Next Dev (manual)",
             "runtimeExecutable": "npm",
             "runtimeArgs": ["run", "dev"],
-            "env": {
-                "DEV": "true",
-            },
+            "envFile": "${workspaceFolder}/.env",
             "console": "integratedTerminal",
             "skipFiles": ["<node_internals>/**"]
         }

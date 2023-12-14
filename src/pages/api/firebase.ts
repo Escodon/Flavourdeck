@@ -5,18 +5,7 @@ import { getFirestore } from "firebase/firestore";
 
 
 let firebaseConfig;
-if (process.env.NENV == 'dev') {
-  const firefile = require('../../../firebase.json');
-  firebaseConfig = {
-    apiKey: firefile.apiKey,
-    authDomain: firefile.authDomain,
-    projectId: firefile.projectId,
-    storageBucket: firefile.storageBucket,
-    messagingSenderId: firefile.messagingSenderId,
-    appId: firefile.appId,
-    measurementId: firefile.measurementId
-  };
-} else {
+
   firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
@@ -26,7 +15,7 @@ if (process.env.NENV == 'dev') {
     appId: process.env.appId,
     measurementId: process.env.measurementId
   };
-}
+
 
 /**
  * The firebase app object. 
