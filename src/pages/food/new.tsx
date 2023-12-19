@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Recipe, { instruction, newRecipe } from '../api/food/functions';
+import Recipe, { instruction } from '../api/food/functions';
 import log from '../api/log';
 import { listenForUser } from '../api/users/functions';
 
@@ -59,7 +59,7 @@ export default function NewFood() {
       instructions: instructionsFormatted,
       tags: [],
     }
-    await newRecipe(toDB, localUser?.uid, false);
+    //await newRecipe(toDB, localUser?.uid, false);
   };
 
   return (
