@@ -6,7 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 let firebaseConfig;
 
-if (process.env.DEV) {
+if (process.env.DEV !== "true") {
   firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
