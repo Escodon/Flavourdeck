@@ -6,6 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 let firebaseConfig;
 
+if (process.env.DEV) {
   firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: process.env.authDomain,
@@ -15,13 +16,15 @@ let firebaseConfig;
     appId: process.env.appId,
     measurementId: process.env.measurementId
   };
-
+} else {
+  firebaseConfig = require("../../../firebase.json");
+}
 
 /**
  * The firebase app object. 
  * Use this to avoid loading it multiple times.
  */
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig/*fbc2*/);
 
 
 /**

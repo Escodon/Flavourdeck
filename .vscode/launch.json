@@ -7,7 +7,9 @@
             "request": "launch",
             "name": "MSEdge",
             "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/flavourdeck"
+            "webRoot": "${workspaceFolder}/flavourdeck",
+            "envFile": "${workspaceFolder}/.env",
+
         },
         {
             "type": "node",
