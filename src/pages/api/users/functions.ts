@@ -3,13 +3,29 @@ import {
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   setPersistence,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import log from "../log";
 export const runtime = 'edge';
 
+
+/**
+ * Logs out the currently authenticated user.
+ * @returns {Promise} .
+ */
+export async function logoutUser(): Promise<void> {
+  log("Logging out user", "logoutUser");
+  return signOut(auth)
+    .then(() => {
+      log("User logged out", "logoutUser");
+    })
+    .catch((error) => {
+      log(`Error logging out user: ${error}`, "logoutUser");
+    });
+}
 
 /**
  * Wrapper for firebaokses auth function.
