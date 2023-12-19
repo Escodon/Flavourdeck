@@ -13,7 +13,7 @@ main {
   padding-left: 10px;
   padding-right: 10px;
 }
-
+/* ss */
 .topBar {
   top: 0px;
   left: 0px;
@@ -38,6 +38,7 @@ main {
   transition: background 0.3s;
   border-bottom: 1px solid var(--borderGrey) !important;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .topBar img {
@@ -51,7 +52,7 @@ h1 {
   font-family: var(--headings);
 }
 
-input {
+input, textarea {
   outline: none;
   padding: 8px;
   border-radius: var(--smallBorderRadius);
@@ -65,13 +66,12 @@ input {
   box-sizing: border-box;
   font-family: var(--sansSerif);
   box-shadow: 2.5px 2.5px 10px rgb(230, 230, 230);
-  transition: border 0.5s, transform 0.2s;
+  transition: border 0.4s;
 }
 
-input:focus {
+input:focus, textarea:focus {
   border: 1px solid var(--primaryAccentColour);
-  transition: border 0.5s, transform 0.2s;
-  transform: scale(1.01);
+  transition: border 0.4s;
 }
 
 button {

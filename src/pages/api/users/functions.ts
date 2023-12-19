@@ -14,7 +14,7 @@ export const runtime = 'edge';
 
 /**
  * Logs out the currently authenticated user.
- * @returns {Promise} .
+ * @returns {Promise}.
  */
 export async function logoutUser(): Promise<void> {
   log("Logging out user", "logoutUser");

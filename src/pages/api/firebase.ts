@@ -6,23 +6,23 @@ import { getFirestore } from "firebase/firestore";
 
 let firebaseConfig;
 
-if (process.env.DEV !== "true") {
-  firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId,
-    measurementId: process.env.measurementId
-  };
-} else {
-  try {
+// if (process.env.DEV !== "true") {
+//   firebaseConfig = {
+//     apiKey: process.env.apiKey,
+//     authDomain: process.env.authDomain,
+//     projectId: process.env.projectId,
+//     storageBucket: process.env.storageBucket,
+//     messagingSenderId: process.env.messagingSenderId,
+//     appId: process.env.appId,
+//     measurementId: process.env.measurementId
+//   };
+// } else {
+//   try {
     firebaseConfig = require("../../../firebase.json");
-  } catch (error) {
-    console.log("Could not load firebase.json:", error);
-  }
-}
+//   } catch (error) {
+//     console.log("Could not load firebase.json:", error);
+//   }
+// }
 
 /**
  * The firebase app object. 

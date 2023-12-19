@@ -85,7 +85,7 @@ export default interface Recipe {
 export async function newRecipe(recipe: Recipe, UserID: string | null, privateRecipe: boolean) {
   log(`Adding recipe "${recipe.name}"`, "newRecipe");
   if (UserID == null) { return false;}
-  let docRef = collection(db, "Users", UserID, "recipes");
+  let docRef = collection(db, "users", UserID, "recipes");
   let res = await addDoc(docRef, recipe);
   await updateIndex(recipe, privateRecipe);
   if (res == null) {
