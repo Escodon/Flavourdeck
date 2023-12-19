@@ -1,10 +1,37 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Recipe, { instruction } from '../api/food/functions';
+import Recipe, { instruction, newRecipe } from '../api/food/functions';
 import log from '../api/log';
+import { listenForUser } from '../api/users/functions';
 
 export default function NewFood() {
   const [instructionBox, setTextBoxes] = useState([{ id: 0, value: '' }]);
+  const [localUser, setLocalUser] = useState<User | null>(null);
+  const router = useRouter(); 
+  var { uid } = router.query;
+  type User = {
+		displayName: string | null;
+		email: string | null;
+		uid: string | null;
+	};
+
+
+  listenForUser((user) => {
+		if (!user) {
+			log("User is null! Redirecting to login page", "food/new/listenForUser");
+			router.push({
+				pathname: "/login",
+				query: {
+					then: "/food/new",
+					thenDisplayName: "Settings",
+				},
+			});
+		} else {
+			setLocalUser(user);
+			log("User signed in. Continuing...", "food/new/listenForUser");
+		}
+	});
 
   const addTextBox = () => {
     setTextBoxes([...instructionBox, { id: instructionBox.length, value: '' }]);
@@ -16,7 +43,6 @@ export default function NewFood() {
 
   const getValues = async () => {
     const values = instructionBox.map(box => box.value); 
-    //log("DEBUG:" + values.toString(), "newFood/getValues")
     let instructionsFormatted: instruction[] = [];
     var i;
     for (i in values) {
@@ -33,10 +59,7 @@ export default function NewFood() {
       instructions: instructionsFormatted,
       tags: [],
     }
-    log(JSON.stringify(toDB), "newFood/getValues")
-    // await newRecipe(toDB, "test", false).then((res) => {
-    //   log(JSON.stringify(res), "newFood/getValues")
-    // })
+    await newRecipe(toDB, localUser?.uid, false);
   };
 
   return (

@@ -82,8 +82,9 @@ export default interface Recipe {
  * @param privateRecipe Whether the recipe should be private or not. Currently unused.
  * @returns True if successful, Error if not.
  */
-export async function newRecipe(recipe: Recipe, UserID: string, privateRecipe: boolean) {
+export async function newRecipe(recipe: Recipe, UserID: string | null, privateRecipe: boolean) {
   log(`Adding recipe "${recipe.name}"`, "newRecipe");
+  if (UserID == null) { return false;}
   let docRef = collection(db, "Users", UserID, "recipes");
   let res = await addDoc(docRef, recipe);
   await updateIndex(recipe, privateRecipe);

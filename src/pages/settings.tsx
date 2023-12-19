@@ -10,16 +10,13 @@ import { listenForUser } from "./api/users/functions";
 export default function UserSettings() {
 	const router = useRouter();
 	var { uid } = router.query;
-	//const [user, setUser] = useState("");
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	type User = {
 		displayName: string | null;
 		email: string | null;
 		uid: string | null;
-	};
-
-	// Create a state variable for localUser
+	}
 	const [localUser, setLocalUser] = useState<User | null>(null);
 
 	listenForUser((user) => {

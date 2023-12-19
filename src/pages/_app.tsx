@@ -1,4 +1,5 @@
   import '@/styles/globals.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { AppProps } from 'next/app'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,6 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
 
   return <span>
+    <SpeedInsights/>
+    
     <div id='topBar' className={topBarClass}>
       <Image alt='Escodon logo' onClick={pushToIndex} style={{ marginTop: '6px', marginBottom: '2px', float: 'left', cursor: 'pointer' }} width='22' height='22' src={'/assets/logo_simple.svg'} />
       <Link href="/users/login">
