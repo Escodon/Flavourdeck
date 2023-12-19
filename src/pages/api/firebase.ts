@@ -17,7 +17,11 @@ if (process.env.DEV !== "true") {
     measurementId: process.env.measurementId
   };
 } else {
-  firebaseConfig = require("../../../firebase.json");
+  try {
+    firebaseConfig = require("../../../firebase.json");
+  } catch (error) {
+    console.log("Could not load firebase.json:", error);
+  }
 }
 
 /**
