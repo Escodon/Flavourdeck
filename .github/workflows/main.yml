@@ -27,8 +27,5 @@ jobs:
     - name: Install dependencies
       run: npm i vercel
 
-    - name: Add firefile 
-      run: echo ${{ secrets.FIREFILE }} >> ./firebase.json && ls
-
     - name: Deploy
       run: vercel --token ${{ secrets.VERCEL_AUTH }} --yes -e NODE_ENV=production
