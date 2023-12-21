@@ -83,6 +83,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 			return false;
 		}
 		await newUser(target.email.value, target.password.value);
+		router.push("/settings");
 
 	}
 
