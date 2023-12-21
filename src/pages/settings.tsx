@@ -2,7 +2,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../api/firebase";
 import log from "../api/log";
 import { listenForUser, loginIfUserNull } from "../api/users/functions";
@@ -15,34 +15,39 @@ export default function UserSettings() {
 		displayName: string | null;
 		email: string | null;
 		uid: string | null;
-	}
+	};
 	const [localUser, setLocalUser] = useState<User | null>(null);
 
-	loginIfUserNull({then: '/settings', thenDisplayName: 'Settings'}, router)
-	
-	
-	listenForUser((user) => {
-		console.log(":)")
-		if (!user) {
-			log("User is null! Redirecting to login page", "settings/listenForUser");
-			// router.push({
-			// 	pathname: "/login",
-			// 	query: {
-			// 		then: "/settings",
-			// 		thenDisplayName: "Settings",
-			// 	},// we should be able to replace this redirect code with my new loginifusernull fn now?
-			// });
-		} else {
-			setLocalUser(user);
-			log("User signed in. Continuing...", "settings/listenForUser");
-		}
-	});
+	loginIfUserNull({ then: "/settings", thenDisplayName: "Settings" }, router);
 
-	loginIfUserNull({
-		then: '/settings',
-		thenDisplayName: 'Settings :)'
-	}, router)
-	
+	useEffect(() => {
+		listenForUser((user) => {
+			if (!user) {
+				log(
+					"User is null! Redirecting to login page",
+					"settings/listenForUser"
+				);
+				// router.push({
+				// 	pathname: "/login",
+				// 	query: {
+				// 		then: "/settings",
+				// 		thenDisplayName: "Settings",
+				// 	},// we should be able to replace this redirect code with my new loginifusernull fn now?
+				// });
+			} else {
+				setLocalUser(user);
+				log("User signed in. Continuing...", "settings/listenForUser");
+			}
+		});
+	}, []);
+
+	loginIfUserNull(
+		{
+			then: "/settings",
+			thenDisplayName: "Settings :)",
+		},
+		router
+	);
 
 	/**
 	 * Updates the user settings
@@ -63,19 +68,21 @@ export default function UserSettings() {
 		);
 		if (auth.currentUser) {
 			updateProfile(auth.currentUser, {
-			  displayName: newName,
-			  photoURL: ""
+				displayName: newName,
+				photoURL: "",
 			})
-			  .then(() => {
-				log('User display name updated successfully', "settings/updateSettings");
-			  })
-			  .catch((error) => {
-				console.error('Error updating user display name', error);
-			  });
-		  }
-		  return;
+				.then(() => {
+					log(
+						"User display name updated successfully",
+						"settings/updateSettings"
+					);
+				})
+				.catch((error) => {
+					console.error("Error updating user display name", error);
+				});
+		}
+		return;
 	}
-
 
 	return (
 		<>

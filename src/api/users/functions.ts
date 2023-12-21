@@ -177,6 +177,10 @@ export function loginIfUserNull(pageInfo: LoginRedirectParams, router: any) {
 				"No user logged in - redirecting to login page and passing it the provided LoginRedirectParams",
 				"loginIfUserNull"
 			);
+      router.push({
+        pathname: '/login',
+        query: pageInfo
+      })
 		}
 	});
 }
