@@ -3,30 +3,30 @@ import { User } from 'firebase/auth';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import log from './api/log';
-import { listenForUser } from './api/users/functions';
+import log from '../api/log';
+import { listenForUser } from '../api/users/functions';
 
 
 
 export default function Home() {
   const [localUser, setLocalUser] = useState<User | null>(null);
   listenForUser((user) => {
-		if (!user) {
-			log("User is null! Redirecting to login page", "settings/listenForUser");
-			router.push({
-				pathname: "/login",
-				query: {
-					then: "/settings",
-					thenDisplayName: "Settings",
-				},
-			});
-		} else {
-			setLocalUser(user);
-			log("User signed in. Continuing...", "settings/listenForUser");
-		}
-	});
+    if (!user) {
+      log("User is null! Redirecting to login page", "settings/listenForUser");
+      router.push({
+        pathname: "/login",
+        query: {
+          then: "/settings",
+          thenDisplayName: "Settings",
+        },
+      });
+    } else {
+      setLocalUser(user);
+      log("User signed in. Continuing...", "settings/listenForUser");
+    }
+  });
   const router = useRouter();
-  function push(path:string) {router.push(path)}
+  function push(path: string) { router.push(path) }
   return (
     <>
       <Head>
@@ -36,13 +36,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Welcome to Flavourdeck </h1>
+        <h1>Welcome to Flavourdeck</h1>
 
         <BouncyButton shouldBounceEval={() => { return true }} className='primary' onClick={() => {push('/recipe/new')}}> Start cooking </BouncyButton>
         {/* <BouncyButton shouldBounceEval={() => { return true }}  className='primary'>
           Start cooking
         </BouncyButton> */}
-        <button className='primary' onClick={() => {push('/settings')}}>Settings</button>
+        <button className='primary' onClick={() => { push('/settings') }}>Settings</button>
       </main>
     </>
   )

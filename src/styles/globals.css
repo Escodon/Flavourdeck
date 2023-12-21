@@ -62,11 +62,15 @@ input, textarea {
   padding-top: 9.5px;
   padding-bottom: 9px;
   margin-bottom: 11px;
-  width: 98%;
+  width: calc(100% - 8px);
   box-sizing: border-box;
   font-family: var(--sansSerif);
   box-shadow: 2.5px 2.5px 10px rgb(230, 230, 230);
   transition: border 0.4s;
+}
+
+textarea {
+  min-height: 80px;
 }
 
 input:focus, textarea:focus {

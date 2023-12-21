@@ -4,14 +4,15 @@ import type { AppProps } from "next/app";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import log from "./api/log";
-import { listenForUser } from "./api/users/functions";
+import log from "../api/log";
+import { listenForUser, logoutUser } from "../api/users/functions";
 
 var loggedIn = false;
 export function toggleLoggedIn() {
 	loggedIn = !loggedIn;
 	return loggedIn;
 }
+
 
 function LoginButton() {
 	return (
@@ -22,10 +23,10 @@ function LoginButton() {
 }
 
 function LogoutButton() {
-  return (
+	return (
 		<button onClick={() => {
-      
-    }} className="primary" style={{ float: "right", marginRight: "0" }}>
+			logoutUser()
+		}} className="primary" style={{ float: "right", marginRight: "0" }}>
 			Log out
 		</button>
 	);
@@ -33,7 +34,7 @@ function LogoutButton() {
 
 export default function App({ Component, pageProps }: AppProps) {
 	const [topBarClass, setTopBarClass] = useState("topBar");
-	const [buttons, setButtons] = useState([<LoginButton/>]);
+	const [buttons, setButtons] = useState<Array<any>>();
 	const router = useRouter();
 	function pushToIndex() {
 		router.push("/");
@@ -41,7 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	listenForUser((user) => {
 		log("User logged in!", "_app/listenForUser");
-    setButtons([])
+		setButtons([<LogoutButton />])
 	});
 
 	return (

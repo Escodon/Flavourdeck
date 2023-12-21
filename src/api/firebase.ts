@@ -18,7 +18,7 @@ let firebaseConfig;
 //   };
 // } else {
 //   try {
-    firebaseConfig = require("../../../firebase.json");
+    firebaseConfig = require("../../firebase.json");
 //   } catch (error) {
 //     console.log("Could not load firebase.json:", error);
 //   }

@@ -14,17 +14,16 @@ export const runtime = 'edge';
 
 /**
  * Logs out the currently authenticated user.
- * @returns {Promise}.
  */
 export async function logoutUser(): Promise<void> {
   log("Logging out user", "logoutUser");
-  return signOut(auth)
-    .then(() => {
-      log("User logged out", "logoutUser");
-    })
-    .catch((error) => {
-      log(`Error logging out user: ${error}`, "logoutUser");
-    });
+
+  try {
+    await signOut(auth)
+    log("User logged out", "logoutUser");
+  } catch (error) {
+    log(`Error logging out user: ${error}`, "logoutUser");
+  }
 }
 
 /**
@@ -37,19 +36,19 @@ export async function authUser(email: string, password: string): Promise<any> {
   log(`Authenticating user with email ${email}`, "authUser");
   setPersistence(auth, browserLocalPersistence).then(() => {
     log("Persisitence set to local", "authUser/setPersistence")
-  return signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      log(`User with email ${email} authenticated`, "authUser")
-      const user = userCredential.user;
-      return { error: false, user };
-    })
-    .catch((error) => {
-      log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      return { error: true, code: errorCode, message: errorMessage };
-    });
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        log(`User with email ${email} authenticated`, "authUser")
+        const user = userCredential.user;
+        return { error: false, user };
+      })
+      .catch((error) => {
+        log(`User with email ${email} failed to authenticate. Error: ${error.message}`, "authUser")
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return { error: true, code: errorCode, message: errorMessage };
+      });
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -143,7 +142,7 @@ export function listenForUser(callbackFn: (user: User | null) => void) {
   listenForUserFnArray.push(callbackFn)
 }
 
-export async function getPublicUserInfo(uid:string) {
+export async function getPublicUserInfo(uid: string) {
   let UsersCollection = collection(db, "users");
   let userSettings: UserSettings = {} as UserSettings;
   const querySnapshot = await getDocs(UsersCollection);
