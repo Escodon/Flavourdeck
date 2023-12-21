@@ -11,6 +11,19 @@ import { auth, db } from "../firebase";
 import log from "../log";
 export const runtime = 'edge';
 
+/**
+ * Parameter object for providing the necessary information to the login page to facilitate a desired redirect after a successful login.
+ */
+export interface LoginRedirectParams {
+  /**
+   * The URL to navigate to after a successful login.
+   */
+  then: string
+  /**
+   * The text to display to the user that represents the destination they will be taken to after a successful login.
+   */
+  thenDisplayName: string
+}
 
 /**
  * Logs out the currently authenticated user.
@@ -27,7 +40,7 @@ export async function logoutUser(): Promise<void> {
 }
 
 /**
- * Wrapper for firebaokses auth function.
+ * Wrapper for Firebase's auth function. Authenticates a user. More to be impremented toon TM.
  * @param email The inputted email
  * @param password The inputted password
  * @returns {Promise} .
@@ -140,6 +153,15 @@ var listenForUserFnArray: Array<(user: User | null) => void> = []
  */
 export function listenForUser(callbackFn: (user: User | null) => void) {
   listenForUserFnArray.push(callbackFn)
+}
+
+export function loginIfUserNull(pageInfo: LoginRedirectParams, router: any) {
+  listenForUser((user) => { 
+    if (user == null) {
+      
+      log('No user logged in - redirecting to login page and passing it the provided LoginRedirectParams', 'loginIfUserNull')
+    }
+  })
 }
 
 export async function getPublicUserInfo(uid: string) {

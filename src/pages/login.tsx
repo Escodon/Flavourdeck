@@ -1,9 +1,9 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
-import { toggleLoggedIn } from "../_app";
-import log from "../../api/log";
-import { authUser, newUser } from "../../api/users/functions";
+import log from "../api/log";
+import { authUser, newUser } from "../api/users/functions";
+import { toggleLoggedIn } from "./_app";
 
 
 log("Login page called", "login");

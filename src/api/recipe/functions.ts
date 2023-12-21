@@ -1,7 +1,6 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import log from "../log";
-import { updateIndex } from "./search";
 export const runtime = 'edge';
 
 /* 
@@ -85,16 +84,13 @@ export default interface Recipe {
 export async function newRecipe(recipe: Recipe, UserID: string | null, privateRecipe: boolean) {
   log(`Adding recipe "${recipe.name}"`, "newRecipe");
   if (UserID == null) { return false;}
-  let docRef = collection(db, "users", UserID, "recipes");
-  let res = await addDoc(docRef, recipe);
-  await updateIndex(recipe, privateRecipe);
-  if (res == null) {
-    throw new Error("Failed to add recipe"); 
-    //return false
-  }
+  let collectionRef = collection(db, "users", UserID, "recipes");
+  let docRef = doc(collectionRef); // generate a new document reference with an auto-generated ID
+  await setDoc(docRef, recipe, { merge: true });
   log(`Added recipe "${recipe.name}"`, "newRecipe");
   return true;
-}
+};
+
 
 /**
  * Gets a recipe by ID. Used with {@link searchRecipes}.

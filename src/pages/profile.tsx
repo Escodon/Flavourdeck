@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { getPublicUserInfo } from '../../api/users/functions';
+import { getPublicUserInfo } from '../api/users/functions';
 
 
 

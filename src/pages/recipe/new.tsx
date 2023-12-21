@@ -1,13 +1,14 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Recipe, { instruction, newRecipe } from "../../api/recipe/functions";
 import log from "../../api/log";
+import Recipe, { instruction, newRecipe } from "../../api/recipe/functions";
 import { listenForUser } from "../../api/users/functions";
 
 export default function Newrecipe() {
 	const [instructionBox, setTextBoxes] = useState([{ id: 0, value: "" }]);
 	const [localUser, setLocalUser] = useState<User | null>(null);
+	const [responseText, setResponseText] = useState("");
 	const router = useRouter();
 	var { uid } = router.query;
 	type User = {
@@ -69,6 +70,7 @@ export default function Newrecipe() {
     let value = await getValues();
     log("DEBUG: " + JSON.stringify(value), "recipe/new/getValues");
 		await newRecipe(value, localUser?.uid || null, false);
+		setResponseText("Recipe created!");
   }
 
 	return (
@@ -101,6 +103,8 @@ export default function Newrecipe() {
 				))}
 				<button onClick={addTextBox}>New Instruction Box</button>
 				<button onClick={handleSubmit}>Submit</button>
+				<br />
+				<p>{responseText}</p>
 			</main>
 		</>
 	);

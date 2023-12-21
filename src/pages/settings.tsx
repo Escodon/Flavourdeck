@@ -5,11 +5,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { auth } from "../api/firebase";
 import log from "../api/log";
-import { listenForUser } from "../api/users/functions";
+import { listenForUser, loginIfUserNull } from "../api/users/functions";
 
 export default function UserSettings() {
 	const router = useRouter();
-	var { uid } = router.query;
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	type User = {
@@ -19,6 +18,8 @@ export default function UserSettings() {
 	}
 	const [localUser, setLocalUser] = useState<User | null>(null);
 
+	loginIfUserNull({then: '/settings', thenDisplayName: 'Settings'}, router)
+
 	listenForUser((user) => {
 		if (!user) {
 			log("User is null! Redirecting to login page", "settings/listenForUser");
@@ -27,18 +28,19 @@ export default function UserSettings() {
 				query: {
 					then: "/settings",
 					thenDisplayName: "Settings",
-				},
+				},// we should be able to replace this redirect code with my new loginifusernull fn now?
 			});
 		} else {
 			setLocalUser(user);
+			console.log("DEBUG" + JSON.stringify(localUser));
 			log("User signed in. Continuing...", "settings/listenForUser");
-			if (uid == undefined || uid == null) {
-				log("UID is null! Manually adding it...", "settings/uidCheck");
-				console.log(user?.uid) // Use user?.uid instead of localUser?.uid
-				router.push("/settings?uid=" + user?.uid);
-			}
 		}
 	});
+
+	loginIfUserNull({
+		then: '/settings',
+		thenDisplayName: 'Settings :)'
+	}, router)
 	
 
 	/**
@@ -58,12 +60,6 @@ export default function UserSettings() {
 			"Complete! Updating user settings (database)",
 			"settings/updateSettings"
 		);
-		// let settingsToDB = {
-		// 	uid: localUser.uid,
-		// 	displayName: newName,
-		// 	email: newEmail,
-		// 	darkMode: false, // To be implamented
-		// };
 		if (auth.currentUser) {
 			updateProfile(auth.currentUser, {
 			  displayName: newName,
@@ -76,9 +72,10 @@ export default function UserSettings() {
 				console.error('Error updating user display name', error);
 			  });
 		  }
+		  return;
 	}
 
-	log("Rendering user settings page for user with uid " + localUser?.uid, "settings");
+	log("Rendering settings page.", "settings");
 
 	return (
 		<>
