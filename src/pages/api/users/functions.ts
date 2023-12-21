@@ -77,12 +77,13 @@ export async function newUser(email: string, password: string) {
       let uid = user.uid;
       let UsersCollection = collection(db, "users");
       await addDoc(UsersCollection, { uid, email, displayName });
-
+      log("User created with email " + email, "newUser")
       return user;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      log("Error creating user: " + errorMessage, "newUser")
       return { errorCode, errorMessage };
     });
 }
