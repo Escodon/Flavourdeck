@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Recipe, { instruction, newRecipe } from "../api/food/functions";
-import log from "../api/log";
-import { listenForUser } from "../api/users/functions";
+import Recipe, { instruction, newRecipe } from "../../api/recipe/functions";
+import log from "../../api/log";
+import { listenForUser } from "../../api/users/functions";
 
-export default function NewFood() {
+export default function Newrecipe() {
 	const [instructionBox, setTextBoxes] = useState([{ id: 0, value: "" }]);
 	const [localUser, setLocalUser] = useState<User | null>(null);
 	const router = useRouter();
@@ -18,17 +18,17 @@ export default function NewFood() {
 
 	listenForUser((user) => {
 		if (!user) {
-			log("User is null! Redirecting to login page", "food/new/listenForUser");
+			log("User is null! Redirecting to login page", "recipe/new/listenForUser");
 			router.push({
 				pathname: "/login",
 				query: {
-					then: "/food/new",
+					then: "/recipe/new",
 					thenDisplayName: "Settings",
 				},
 			});
 		} else {
 			setLocalUser(user);
-			log("User signed in. Continuing...", "food/new/listenForUser");
+			log("User signed in. Continuing...", "recipe/new/listenForUser");
 		}
 	});
 
@@ -67,7 +67,7 @@ export default function NewFood() {
 	};
   async function handleSubmit() {
     let value = await getValues();
-    log("DEBUG: " + JSON.stringify(value), "food/new/getValues");
+    log("DEBUG: " + JSON.stringify(value), "recipe/new/getValues");
 		await newRecipe(value, localUser?.uid || null, false);
   }
 

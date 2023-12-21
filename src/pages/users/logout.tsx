@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { logoutUser } from '../api/users/functions';
+import { logoutUser } from '../../api/users/functions';
 
 
 

@@ -3,9 +3,9 @@ import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { auth } from "./api/firebase";
-import log from "./api/log";
-import { listenForUser } from "./api/users/functions";
+import { auth } from "../api/firebase";
+import log from "../api/log";
+import { listenForUser } from "../api/users/functions";
 
 export default function UserSettings() {
 	const router = useRouter();
