@@ -3,7 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { AppProps } from "next/app";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import log from "../api/log";
 import { listenForUser, logoutUser } from "../api/users/functions";
 
@@ -13,57 +13,65 @@ export function toggleLoggedIn() {
 	return loggedIn;
 }
 
-
-function LoginButton() {
-	return (
-		<button className="primary" style={{ float: "right", marginRight: "0" }}>
-			Log in
-		</button>
-	);
-}
-
-function LogoutButton() {
-	return (
-		<button onClick={() => {
-			logoutUser()
-		}} className="primary" style={{ float: "right", marginRight: "0" }}>
-			Log out
-		</button>
-	);
-}
-
 export default function App({ Component, pageProps }: AppProps) {
 	const [topBarClass, setTopBarClass] = useState("topBar");
 	const [buttons, setButtons] = useState<Array<any>>();
 	const router = useRouter();
-	function pushToIndex() {
-		router.push("/");
+	function push(to: string) {
+		router.push(to);
+	}
+	function LoginButton() {
+		return (
+			<button
+				className="primary"
+				onClick={() => push("/settings")}
+				style={{ float: "right", marginRight: "0" }}
+			>
+				Log in
+			</button>
+		);
 	}
 
-	listenForUser((user) => {
-		log("User logged in!", "_app/listenForUser");
-		setButtons([<LogoutButton />])
-	});
+	function LogoutButton() {
+		return (
+			<button
+				onClick={() => {
+					logoutUser();
+				}}
+				className="primary"
+				style={{ float: "right", marginRight: "0" }}
+			>
+				Log out
+			</button>
+		);
+	}
+
+	useEffect(() => {
+		listenForUser((user?) => {
+			log("User logged in!", "_app/listenForUser");
+			// useEffect(() => {
+			setButtons([<LogoutButton />]);
+			// }, []);
+		});
+	}, []);
 
 	return (
 		<span>
 			<div id="topBar" className={topBarClass}>
 				<Image
 					alt="Escodon logo"
-					onClick={pushToIndex}
+					onClick={() => push("/")}
 					style={{
 						marginTop: "6px",
 						marginBottom: "2px",
 						float: "left",
-						cursor: "pointer",
+						marginLeft: "10px",
 					}}
 					width="22"
 					height="22"
 					src={"/assets/logo_simple.svg"}
 				/>
 				{buttons}
-				{/* <button className='primary' style={{ float: 'right' }}>Sign up</button> */}{" "}
-				{/* We dont need two buttons*/}
 			</div>
 
 			<Component {...pageProps} />

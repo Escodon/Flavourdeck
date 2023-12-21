@@ -46,13 +46,7 @@ export default function Page({ Component, pageProps }: AppProps) {
 		if (email == "t") { console.log("Test email used!"); router.push('/settings?uid=test'); return true }
 		log("Logging in user " + email, "login/handleSubmit");
 		try {
-			const response = await authUser(email, password);
-			// if (response.error != null) { //it cannot find error. this needs fixing!
-			// 	log("Error: " + response.error, "login/handleSubmit");
-			// 	setRes(response.error);
-			// 	toast.error("test")
-			// 	return false;
-			// }
+			await authUser(email, password);
 			log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
 			toggleLoggedIn()
 			router.push(redirectData.redirectURL);

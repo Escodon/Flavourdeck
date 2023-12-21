@@ -1,4 +1,3 @@
-
 /**
  * The default log function for the API.
  * Will only log if the environment variable DEV is set to true.
@@ -7,8 +6,6 @@
  * @returns {void}
  */
 export default function log(message: string, funcName: string) {
-    // if (process.env.DEV === 'true') {
   console.log(`[FD] ${funcName}: ${message}`)
-    // } else return
 }
-export const runtime = 'edge';
+

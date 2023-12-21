@@ -20,17 +20,18 @@ export default function UserSettings() {
 
 	loginIfUserNull({then: '/settings', thenDisplayName: 'Settings'}, router)
 	
+	
 	listenForUser((user) => {
 		console.log(":)")
 		if (!user) {
 			log("User is null! Redirecting to login page", "settings/listenForUser");
-			router.push({
-				pathname: "/login",
-				query: {
-					then: "/settings",
-					thenDisplayName: "Settings",
-				},// we should be able to replace this redirect code with my new loginifusernull fn now?
-			});
+			// router.push({
+			// 	pathname: "/login",
+			// 	query: {
+			// 		then: "/settings",
+			// 		thenDisplayName: "Settings",
+			// 	},// we should be able to replace this redirect code with my new loginifusernull fn now?
+			// });
 		} else {
 			setLocalUser(user);
 			log("User signed in. Continuing...", "settings/listenForUser");
