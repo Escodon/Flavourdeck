@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap');
 
 :root {
-  font-family: 'Onest';
-  --sansSerif: 'Onest';
-  --headings: 'Onest';
+  font-family: "Hedvig Letters Sans";
+  --sansSerif: "Hedvig Letters Sans";
+  --headings: "Hedvig Letters Sans";
   --smallBorderRadius: 11px;
   --primaryAccentColour: rgb(214, 125, 90);
 }

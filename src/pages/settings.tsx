@@ -18,36 +18,29 @@ export default function UserSettings() {
 	};
 	const [localUser, setLocalUser] = useState<User | null>(null);
 
-	loginIfUserNull({ then: "/settings", thenDisplayName: "Settings" }, router);
 
 	useEffect(() => {
 		listenForUser((user) => {
-			if (!user) {
+			if (!user || user == null) {
 				log(
 					"User is null! Redirecting to login page",
 					"settings/listenForUser"
 				);
-				// router.push({
-				// 	pathname: "/login",
-				// 	query: {
-				// 		then: "/settings",
-				// 		thenDisplayName: "Settings",
-				// 	},// we should be able to replace this redirect code with my new loginifusernull fn now?
-				// });
 			} else {
 				setLocalUser(user);
-				log("User signed in. Continuing...", "settings/listenForUser");
+				log(`User signed in as ${JSON.stringify(user.displayName)}. Continuing...`, `settings/listenForUser`);
 			}
 		});
 	}, []);
+	// loginIfUserNull({ then: "/settings", thenDisplayName: "Settings" }, router);
 
-	loginIfUserNull(
-		{
-			then: "/settings",
-			thenDisplayName: "Settings :)",
-		},
-		router
-	);
+	// loginIfUserNull(
+	// 	{
+	// 		then: "/settings",
+	// 		thenDisplayName: "Settings :)",
+	// 	},
+	// 	router
+	// );
 
 	/**
 	 * Updates the user settings
@@ -84,6 +77,7 @@ export default function UserSettings() {
 		return;
 	}
 
+	log("Rendering settings page for user " + localUser, "settings");
 	return (
 		<>
 			<Head>
