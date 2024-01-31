@@ -48,9 +48,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	useEffect(() => {
 		listenForUser((user?) => {
+			if (!user) {
+				log("User logged out!", "_app/listenForUser");
+				setButtons([<LoginButton />]);
+			} 
+			else {
 			log("User logged in!", "_app/listenForUser");
 
 			setButtons([<LogoutButton />]);
+			}
 		});
 	}, []);
 
