@@ -1,5 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { updateProfile } from "firebase/auth";
+import { updateEmail, updateProfile } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -32,15 +32,6 @@ export default function UserSettings() {
 			}
 		});
 	}, []);
-	// loginIfUserNull({ then: "/settings", thenDisplayName: "Settings" }, router);
-
-	// loginIfUserNull(
-	// 	{
-	// 		then: "/settings",
-	// 		thenDisplayName: "Settings :)",
-	// 	},
-	// 	router
-	// );
 
 	/**
 	 * Updates the user settings

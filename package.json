@@ -23,6 +23,7 @@
     "node-firestore": "^2.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-global-loading": "^1.0.11",
     "react-select": "^5.8.0",
     "react-toastify": "^9.1.3",
     "vercel": "latest"
