@@ -38,3 +38,5 @@ firebase.json
 bun.lockb
 
 .env
+firebaseCreds.js
+

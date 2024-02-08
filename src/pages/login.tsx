@@ -15,11 +15,14 @@ export default function Page({ Component, pageProps }: AppProps) {
 		redirectURL: '/'
 	})
 	const router = useRouter();
+	const {redirect} = router.query;
+	const then = router.query.then
 	useEffect(() => {
-		if (router.query.then && router.query.thenDisplayName) {
-			log("Redirect data: " + router.query.then + " " + router.query.thenDisplayName, "login")
+		console.log(then)
+		if (router.query.then && router.query.thenDisplayText) {
+			log("Redirect data: " + router.query.then + " " + router.query.thenDisplayText, "login")
 			setRedirectData({
-				redirectDisplayText: <span>To continue to <strong>{router.query.thenDisplayName.toString()}</strong></span>,
+				redirectDisplayText: <span>To continue to <strong>{router.query.thenDisplayText.toString()}</strong></span>,
 				redirectURL: router.query.then.toString()
 			})
 		} else {
@@ -49,6 +52,8 @@ export default function Page({ Component, pageProps }: AppProps) {
 			await authUser(email, password);
 			log("Logged in! Redirecting to desired page or index if not specified", "login/handleSubmit")
 			toggleLoggedIn()
+			if (!redirect) { log("No redirect specified! Redirecting to index", "login/handleSubmit"); router.push('/'); return false }
+			else {log("Redirect specified! Redirecting to " + redirect, "login/handleSubmit"); router.push("/"+redirect.toString()); return false}
 			router.push(redirectData.redirectURL);
 
 			return false;

@@ -1,5 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { updateProfile } from "firebase/auth";
+import { updateEmail, updateProfile } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -26,21 +26,13 @@ export default function UserSettings() {
 					"User is null! Redirecting to login page",
 					"settings/listenForUser"
 				);
+				router.push("/login?redirect=settings");
 			} else {
 				setLocalUser(user);
 				log(`User signed in as ${JSON.stringify(user.displayName)}. Continuing...`, `settings/listenForUser`);
 			}
 		});
 	}, []);
-	// loginIfUserNull({ then: "/settings", thenDisplayName: "Settings" }, router);
-
-	// loginIfUserNull(
-	// 	{
-	// 		then: "/settings",
-	// 		thenDisplayName: "Settings :)",
-	// 	},
-	// 	router
-	// );
 
 	/**
 	 * Updates the user settings
