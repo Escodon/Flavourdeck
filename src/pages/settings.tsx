@@ -26,6 +26,7 @@ export default function UserSettings() {
 					"User is null! Redirecting to login page",
 					"settings/listenForUser"
 				);
+				router.push("/login?redirect=settings");
 			} else {
 				setLocalUser(user);
 				log(`User signed in as ${JSON.stringify(user.displayName)}. Continuing...`, `settings/listenForUser`);

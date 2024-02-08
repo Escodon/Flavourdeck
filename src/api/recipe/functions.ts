@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc, QuerySnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import log from "../log";
 export const runtime = 'edge';
@@ -11,7 +11,7 @@ export interface ingredient {
   quantity: number
   ID: number
   inDir: boolean
-  
+
 }; //for later
 
 /*
@@ -42,7 +42,7 @@ export default interface Recipe {
    * Uses Date.Now() to generate a unique ID.
    * @example "163456789"
    */
-  // ID: string; //we can get this from the doc ID
+  ID: string; //we can get this from the doc ID
   /**
    * The name of the recipe.
    * @example "Pasta Sauce"
@@ -83,7 +83,7 @@ export default interface Recipe {
  */
 export async function newRecipe(recipe: Recipe, UserID: string | null, privateRecipe: boolean) {
   log(`Adding recipe "${recipe.name}"`, "newRecipe");
-  if (UserID == null) { return false;}
+  if (UserID == null) { return false; }
   let collectionRef = collection(db, "users", UserID, "recipes");
   let docRef = doc(collectionRef); // generate a new document reference with an auto-generated ID
   await setDoc(docRef, recipe, { merge: true });
@@ -97,13 +97,12 @@ export async function newRecipe(recipe: Recipe, UserID: string | null, privateRe
  * @param ID The ID of the recipe to get. See {@link Recipe.ID}.
  * @returns The JSON data of the recipe. See {@link Recipe}.
  */
-export async function getRecipe(ID: string) {
+export async function getRecipe(ID: string, UserID: string) {
   log(`Getting recipe with ID ${ID}`, "getRecipe");
-  const querySnapshot = await getDocs(collection(db, "recipes"));
-  const recipes = querySnapshot.docs.map((doc) => doc.data() as Recipe);
-  const recipe = recipes.find((recipe) => recipe.name === ID);
-  log(`Got recipe with ID ${ID}`, "getRecipe");
-  return recipe;
+  let querySnapshot = await getDocs(collection(db, "users", UserID, "recipes"));
+  let recipes = querySnapshot.docs.map((doc:any) => doc.data() as Recipe);
+  console.log(JSON.stringify(recipes[0]))
+  return recipes[0];
 }
 
 

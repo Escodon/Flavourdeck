@@ -1,3 +1,4 @@
+import log from '@/api/log';
 import BouncyButton from '@/components/bouncyButton';
 import { User } from 'firebase/auth';
 import Head from 'next/head';
@@ -8,8 +9,20 @@ import { useState } from 'react';
 
 export default function Home() {
   const [localUser, setLocalUser] = useState<User | null>(null);
-  
+  const [authBtnUrl, setAuthBtnUrl] = useState<string>('/login');
   const router = useRouter();
+
+  function authBtnPush(router:any){
+    if (localUser) {
+      setAuthBtnUrl('/login');
+      log("Auth button push set to /login", "index/authBtnPush")
+    } else {
+      setAuthBtnUrl('/logout');
+      log("Auth button push set to /logout", "index/authBtnPush")
+    }
+    router.push(authBtnUrl)
+
+  }
   function push(path: string) { router.push(path) }
   return (
     <>
@@ -26,7 +39,7 @@ export default function Home() {
         {/* <BouncyButton shouldBounceEval={() => { return true }}  className='primary'>
           Start cooking
         </BouncyButton> */}
-        <button className='primary' onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' onClick={() => { authBtnPush(router) }}>Settings</button>
       </main>
     </>
   )
