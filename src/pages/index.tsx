@@ -22,11 +22,15 @@ export default function Home() {
       <main>
         <h1>Welcome to Flavourdeck</h1>
 
-        <BouncyButton shouldBounceEval={() => { return true }} className='primary' onClick={() => {push('/recipe/new')}}> Start cooking </BouncyButton>
+        {/* <button className='primary' onClick={() => {push('/recipe/new')}}> Start cooking </button> */}
         {/* <BouncyButton shouldBounceEval={() => { return true }}  className='primary'>
           Start cooking
         </BouncyButton> */}
-        <button className='primary' onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' style={{backgroundColor: '#FFC857', color: 'black'}} onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' style={{backgroundColor: '#5B869D'}} onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' style={{backgroundColor: '#62A56B'}} onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' style={{backgroundColor: '#EF6461'}} onClick={() => { push('/settings') }}>Settings</button>
+        <button className='primary' style={{backgroundColor: '#E6476C'}} onClick={() => { push('/settings') }}>Settings</button>
       </main>
     </>
   )

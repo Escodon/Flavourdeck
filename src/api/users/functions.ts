@@ -1,10 +1,10 @@
 import {
-  User,
-  browserLocalPersistence,
-  createUserWithEmailAndPassword,
-  setPersistence,
-  signInWithEmailAndPassword,
-  signOut,
+	User,
+	browserLocalPersistence,
+	createUserWithEmailAndPassword,
+	setPersistence,
+	signInWithEmailAndPassword,
+	signOut,
 } from "firebase/auth";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -164,7 +164,7 @@ var listenForUserFnArray: Array<(user: User | null) => void> = [];
  */
 export function listenForUser(callbackFn: (user: User | null) => void) {
 	if (authStateFires === 1) {
-    callbackFn(initialAuthState)
+		callbackFn(initialAuthState)
 	}
 
 	listenForUserFnArray.push(callbackFn);
@@ -177,10 +177,10 @@ export function loginIfUserNull(pageInfo: LoginRedirectParams, router: any) {
 				"No user logged in - redirecting to login page and passing it the provided LoginRedirectParams",
 				"loginIfUserNull"
 			);
-      router.push({
-        pathname: '/login',
-        query: pageInfo
-      })
+			router.push({
+				pathname: '/login',
+				query: pageInfo
+			})
 		}
 	});
 }

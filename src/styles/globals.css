@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap');
 
 :root {
-  font-family: "Hedvig Letters Sans";
-  --sansSerif: "Hedvig Letters Sans";
-  --headings: "Hedvig Letters Sans";
+  font-family: "Instrument Sans";
+  --sansSerif: "Instrument Sans";
+  --headings: "Instrument Sans";
   --smallBorderRadius: 11px;
-  --primaryAccentColour: rgb(214, 125, 90);
+  --primaryAccentColour: #4A7D98;
 }
 
 main {
@@ -24,7 +24,7 @@ main {
   height: fit-content;
   padding-top: 11px;
   padding-bottom: 11px;
-  padding-left: 24px;
+  padding-left: 10px;
   padding-right: 15px;
   font-family: var(--sansSerif);
   transition: background 0.3s;
@@ -114,7 +114,7 @@ button {
 
 .primary {
   /* background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%); */
-  background: linear-gradient(180deg, rgb(218, 169, 147) 0%, var(--primaryAccentColour) 100%);
+  background: black;
   /* background-color: var(--primaryAccentColour); */
   /* border: 0.4px solid rgb(186, 186, 186); */
   border-radius: var(--smallBorderRadius);
@@ -124,20 +124,27 @@ button {
   padding-right: 20px;
   display: inline-block;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s, width 2s;
   font-family: var(--font-dm-mono);
   color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 2.5px 2.5px 10px rgb(230, 230, 230);
 }
 
 .primary:hover, .primary:focus-visible {
-  transform: scale(1.05);
-  box-shadow: 4px 4px 14px rgb(215, 215, 215);
+  /* backdrop-filter: grayscale(40%); */
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0px 2.2px 9px 1.2px rgba(200, 200, 200, 0.3);
+  transform: translateY(-2.2px);
+  /* transform: scale(1.04); */
 }
 
+
 .primary:active {
-  transform: scale(0.9);
-  box-shadow: 4px 4px 14px rgb(215, 215, 215);
+  /* box-shadow: 0px 1px 5.5px rgba(150, 150, 150, 0.35) inset, 0px 2px 10px 0.5px rgba(190, 190, 190, 0.4); */
+  box-shadow: none;
+  transition: box-shadow 0.1s, transform 0.2s;
+  transform: none;
+  /* transform: scale(0.96); */
 }
 
 .twoColumn {
