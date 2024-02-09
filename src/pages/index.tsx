@@ -1,5 +1,4 @@
 import log from '@/api/log';
-import BouncyButton from '@/components/bouncyButton';
 import { User } from 'firebase/auth';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -35,11 +34,12 @@ export default function Home() {
       <main>
         <h1>Welcome to Flavourdeck</h1>
 
-        <BouncyButton shouldBounceEval={() => { return true }} className='primary' onClick={() => {push('/recipe/new')}}> Start cooking </BouncyButton>
-        {/* <BouncyButton shouldBounceEval={() => { return true }}  className='primary'>
-          Start cooking
-        </BouncyButton> */}
-        <button className='primary' onClick={() => { authBtnPush(router) }}>Settings</button>
+        <button className='primary yellow' onClick={() => {push('/recipe/new')}}>Primary Yellow</button>
+        <button className='primary blue' onClick={() => {push('/recipe/new')}}>Primary Blue</button>
+        <button className='primary green' onClick={() => {push('/recipe/new')}}>Primary Green</button>
+        <button className='primary red' onClick={() => {push('/recipe/new')}}>Primary Red</button>
+        <button className='primary pink' onClick={() => {push('/recipe/new')}}>Primary Pink</button>
+        <button className='secondary yellow' onClick={() => { authBtnPush(router) }}>Secondary (always grey)</button>
       </main>
     </>
   )

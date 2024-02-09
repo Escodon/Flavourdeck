@@ -6,6 +6,11 @@
   --headings: "Instrument Sans";
   --smallBorderRadius: 11px;
   --primaryAccentColour: #4A7D98;
+  --blue: #4A7D98;
+  --yellow: #FFC857;
+  --green: #62A56B;
+  --red: #EF6461;
+  --pink: #E6476C;
 }
 
 main {
@@ -82,15 +87,16 @@ button {
   border-radius: var(--smallBorderRadius);
   outline: none;
   border: none;
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-top: 9px;
-  padding-bottom: 8px;
+  padding-top: 10.3px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 14.5px;
   font-family: var(--sansSerif);
   cursor: pointer;
-  /* box-shadow: 5px 5px 15px rgb(186, 186, 186), -5px -5px 15px #ffffff; */
+  box-shadow: 2.5px 2.5px 10px rgb(230, 230, 230);
   margin-right: 14px;
+  margin-bottom: 14px;
 }
 
 /* button: */
@@ -118,19 +124,19 @@ button {
   /* background-color: var(--primaryAccentColour); */
   /* border: 0.4px solid rgb(186, 186, 186); */
   border-radius: var(--smallBorderRadius);
-  padding-top: 10.3px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
   display: inline-block;
   cursor: pointer;
   font-family: var(--font-dm-mono);
   color: white;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 2.5px 2.5px 10px rgb(230, 230, 230);
 }
 
-.primary:hover, .primary:focus-visible {
+.secondary {
+  background: gainsboro !important;
+  color: black !important
+}
+
+button:hover, button:focus-visible {
   /* backdrop-filter: grayscale(40%); */
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0px 2.2px 9px 1.2px rgba(200, 200, 200, 0.3);
@@ -138,8 +144,30 @@ button {
   /* transform: scale(1.04); */
 }
 
+.blue {
+  background-color: var(--blue);
+}
 
-.primary:active {
+.green {
+  background-color: var(--green);
+}
+
+.yellow {
+  background-color: var(--yellow);
+  color: black
+}
+
+.red {
+  background-color: var(--red);
+}
+
+.pink {
+  background-color: var(--pink);
+}
+
+
+
+button:active {
   /* box-shadow: 0px 1px 5.5px rgba(150, 150, 150, 0.35) inset, 0px 2px 10px 0.5px rgba(190, 190, 190, 0.4); */
   box-shadow: none;
   transition: box-shadow 0.1s, transform 0.2s;
